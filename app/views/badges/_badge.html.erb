@@ -1,0 +1,8 @@
+                                    <hr class="nm"><!-- horizontal line -->
+                                      <div class="panel-toolbar-wrapper mt5 mb5 pl5 pr5">
+                                          <div class="panel-toolbar">
+                                            <% @post_badges.each do |b| %>
+                                                <a href="javascript:void(0);" class="btn btn-warning icon-ubuntu btn-outline btn-ubuntu-outline mb5 mr5 btn-sm"><%= "#{b[0]} - #{b[1]}"  %></a>
+                                            <% end %>
+                                          </div>
+                                      </div>

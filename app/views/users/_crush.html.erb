@@ -1,0 +1,25 @@
+<% if mutual_crushlike(@user) %>
+<% if mutual_crush(@user) %>
+<div class="panel-toolbar">
+    <h4 class="semibold nm text-danger"><i class="ico-heart mr5"></i>You both have Crush on eachother</h4>
+</div>
+<br>
+<% end %>
+<!-- START Crush -->
+<% if current_user.rels(dir: :outgoing, type: :crush, between: @user).blank? ? true : false %>
+<div class="panel-toolbar">
+    <h5 class="semibold nm icon-black-lite"><i class="ico-heart mr5"></i>Do you have a Crush on me?</h5>
+</div>
+<div class="panel-body pt0 text-center">
+   <a href="/users/<%= @user.uuid %>/crush?crush=yes" class="btn btn-success mb5" data-remote="true" >Yes</a>
+</div>
+<% else %>
+<div class="panel-toolbar">
+    <h5 class="semibold nm icon-black-lite"><i class="ico-heart mr5"></i>Do you still have a Crush on me?</h5>
+</div>
+<div class="panel-body pt0 text-center">
+   <a href="/users/<%= @user.uuid %>/crush?crush=no" class="btn btn-default mb5" data-remote="true">No</a>
+</div>
+<% end %>
+<!--/ END Crush -->
+<% end %>

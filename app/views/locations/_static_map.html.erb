@@ -1,0 +1,1 @@
+<img src="https://maps.googleapis.com/maps/api/staticmap?center=<%= loc.latitude %>,<%= loc.longitude  %>&zoom=15&size=560x300&maptype=roadmap&sensor=true&markers=color:red|<%= url_encode(loc.address) %>" alt="<%= loc.name unless loc.name.nil? %>" height="300" width="100%">

@@ -1,0 +1,7 @@
+                                      <!-- Comment box -->
+                                      <%= form_for [post, Comment.new ], remote: true do |f| %>
+                                      <%= f.text_field :content , class: "form-control form-control-minimal ht50", placeholder: "Write your comment" %>
+                                      <%= f.submit "", class: "hide" %>
+                                      <% end %>
+                                      <!--/ Comment box -->
+                                    <hr class="nm"> <!-- horizontal line -->

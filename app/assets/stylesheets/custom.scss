@@ -1,0 +1,421 @@
+/*! Adminre v.1.2.0 - custom.css
+ *
+ * @note : Avoid altering this file. Any enhancement should be done in this file
+ * @author : Achal BI
+ */
+
+ $primary-color: #dd172f;
+ 
+ .form-control-btn{
+   position: absolute;
+   top: 0px;
+   right: 40px;
+ }
+
+ .a-color-inherit > a{
+  color: inherit;
+  text-decoration: none;
+}
+.a-color-inherit > a:hover,
+.a-color-inherit > a:focus,
+.a-color-inherit > a:active{
+  color: inherit;
+  outline: 0;
+  text-decoration: none;
+}
+
+*.icon-white {color: white}
+*.icon-silver {color: silver}
+*.icon-grey {color: grey}
+*.icon-red {color: #dd172f}
+*.icon-red-lite {color: #ec465a}
+*.icon-blue {color: #0088AC}
+*.icon-green {color: #4BA84B} 
+*.icon-black {color: black} 
+*.icon-yellow {color: yellow} 
+*.icon-gold {color: gold}
+*.icon-black-lite {color: #444}
+*.icon-ubuntu {color: #f17a49}
+
+
+*.icon-bg-yellow {background-color: #f0ad4e} 
+
+*.icon-font-22 {font-size: 22px;}
+
+*.icon-font-55 {font-size: 55px;}
+*.icon-font-50 {font-size: 50px;}
+*.icon-font-45 {font-size: 45px;}
+*.icon-font-40 {font-size: 40px;}
+*.icon-font-35 {font-size: 35px;}
+*.icon-font-30 {font-size: 30px;}
+
+*.font-10 {font-size: 10px !important;}
+*.font-11 {font-size: 11px !important;}
+*.font-12 {font-size: 12px !important;}
+*.font-13 {font-size: 13px !important;}
+*.font-14 {font-size: 14px !important;}
+*.font-15 {font-size: 15px !important;}
+*.font-16 {font-size: 16px !important;}
+*.font-18 {font-size: 18px !important;}
+*.font-20 {font-size: 20px !important;}
+*.font-25 {font-size: 25px !important;}
+
+.panel > .panel-ribbon-60 {
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.panel > .panel-ribbon-60 > [class*=" ico-"],
+.panel > .panel-ribbon-60 > [class^="ico-"] {
+  margin-top: 13px !important;
+  margin-right: 16px !important;
+}
+
+.panel > .panel-ribbon-60.pull-right:after {
+  border-width: 0 60px 60px 0 !important;
+}
+
+.m0-p0-20{
+	padding: 0px 20px !important;
+	margin: 0px 0px !important;
+}
+
+.mt7{
+  margin-top: 7px;
+}
+
+.ml7{
+  margin-left: 7px;
+}
+.mr7{
+  margin-right: 7px;
+}
+.mb7{
+  margin-bottom: 7px;
+}
+
+.m10-p10{
+	padding: 0px 10px 0px 10px !important;
+	margin: 0px 10px 0px 10px !important;
+}
+
+.m0-p10{
+	padding: 0px 10px 0px 10px !important;
+	margin: 0px 0px 0px 0px !important;
+}
+
+.m0-p0{
+	padding: 0px !important;
+	margin: 0px !important;
+}
+
+.dis-none-imp{
+	display: none !important;
+}
+
+.images_div{
+	cursor: pointer;
+}
+
+.ml30 {
+  margin-left: 30px !important;
+}
+
+.ml50 {
+  margin-left: 50px !important;
+}
+
+.ml100 {
+  margin-left: 100px !important;
+}
+
+
+/* Magnific popup */
+
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+  opacity: 0;
+  -webkit-backface-visibility: hidden;
+  /* ideally, transition speed should match zoom duration */
+  -webkit-transition: all 0.3s ease-out; 
+  -moz-transition: all 0.3s ease-out; 
+  -o-transition: all 0.3s ease-out; 
+  transition: all 0.3s ease-out;
+}
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+  opacity: 1;
+}
+.mfp-with-zoom.mfp-ready.mfp-bg {
+  opacity: 0.8;
+}
+
+.mfp-with-zoom.mfp-removing .mfp-container, 
+.mfp-with-zoom.mfp-removing.mfp-bg {
+  opacity: 0;
+}
+
+.width-75-pc{
+  width: 75% !important;
+}
+
+.width-30{
+	width: 30px !important;
+}
+
+.width-70{
+  width: 70px !important;
+}
+
+.width-50{
+  width: 50px !important;
+}
+
+.width-20{
+	width: 20px !important;
+}
+
+.pac-container{
+  z-index: 99999;
+}
+
+#googlemap {
+ border: 1px dashed #999; 
+ width: 100%; 
+ height: 300px; 
+}
+
+.center-div{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ /*
+  Customized - Sidebar
+  */
+
+  .sidebar .topmenu {
+    background-color: #ecf0f1!important;
+  }
+
+  .sidebar {
+    background-color: #ecf0f1!important;
+  }
+
+  .sidebar .topmenu li.active{
+ /* background-color: #ecf0f1!important; 
+  background-color: tomato!important;
+  background-color: #dd172f!important;
+  background-color: #f17a49 !important;
+  */
+  background-color: $primary-color !important;
+}
+
+.sidebar .topmenu li.active a > .figure > [class^="ico-"],
+.sidebar .topmenu li.active a > .figure > [class*=" ico-"] {
+  border-color: white!important;
+  color: white!important;
+}
+
+.sidebar .topmenu li:after{
+  border-top: 0px!important;
+}
+
+.sidebar .topmenu li.active a {
+ /* color: #444!important; */
+ color: white!important; 
+}
+
+.sidebar .topmenu li a {
+  color: #444!important; 
+  padding: 0px 25px 0px 20px !important;
+}
+
+.scrollbar{
+  display:none;
+  background-color: rgba(181, 181, 181, 0.9) !important;
+}
+
+.sidebar .topmenu li a > .figure {
+  width: 35px!important;
+  padding-left: 12px!important;
+  font-size: 16px!important;
+}
+
+.sidebar .topmenu li a > .text{
+  font-size: 15px!important;
+}
+
+.sidebar-minimized .sidebar .topmenu.topmenu-responsive > li > a > .figure{
+  width: 35px!important;
+  font-size: 30px!important;
+  padding-left: 0px!important;
+}
+
+.sidebar-minimized .sidebar .topmenu.topmenu-responsive > li > a {
+  padding-top: 5px!important;
+  padding-bottom: 2px!important;
+  padding-left: 15px!important;
+  padding-right: 15px!important;
+}
+
+.topmenu {
+  margin-top: 10px!important;
+}
+
+.scrollrail{
+  width: 0px!important;
+}
+
+/*
+.logo-figure {
+   background-image: url("/assets/logo/logo-figure-inverse-1.png")!important;
+}
+.logo-text {
+  background-image: url("/assets/logo/logo-text-inverse-1.png")!important;
+}
+
+*/
+#header.navbar .navbar-header{
+  /*
+  background-color: #dd172f!important;
+  background-color: #A94442!important;
+  background-color: #ffd66a!important;
+  background-color: #f17a49!important;
+  */
+  background-color: $primary-color !important;
+}
+.frontend #header.navbar .navbar-header {
+  background-color: transparent!important;
+}
+
+.navbar-main > a{
+  /*
+  background-color: #dd172f!important;
+  background-color: #A94442!important;
+  background-color: #ffd66a!important;
+  background-color: #f17a49!important;
+  */
+  background-color: $primary-color !important;
+}
+
+.totop{
+  /*
+  background-color: #dd172f!important;
+  background-color: #A94442!important;
+  background-color: #ffd66a!important;
+  background-color: #f17a49!important;
+  */
+  background-color: $primary-color !important;
+}
+
+.btn-ubuntu-outline{
+  /*color: #f17a49!important;
+  border-color: #f17a49!important;*/
+
+  color: $primary-color !important;
+  border-color: $primary-color !important;
+    &:hover {
+        color: white!important;
+        border-color: $primary-color !important;
+        background-color: $primary-color !important;
+    }
+
+}
+
+.btn-ubuntu{
+  color: white!important;
+  border-color: $primary-color !important;
+  background-color: $primary-color !important;
+}
+.br-nobg:before {
+  background: none;
+  filter: none;
+}
+
+.li_link:hover{
+  cursor: pointer;
+  background-color: #91c854!important;
+  color: white!important;
+}
+
+.li_link:hover > .section > .text-grey{
+  color: white!important;
+}
+.text-grey{
+  color: #A2A2A2;
+}
+
+.panel-ovrd-bottom-trnp{
+  border-color: transparent!important;
+  border-bottom-color: transparent!important;
+}
+
+.spinner_simple{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -9px;
+  margin-left: -9px;
+  width: 18px;
+  height: 18px;
+  background-image: url("/assets/loading/spinner.gif");
+  background-repeat: no-repeat;
+}
+
+@media(max-width : 480px){
+  .li-search{
+    float: left;
+    right: 0;
+    top: 0;
+    position: absolute!important;
+    > a {
+        background: none!important;
+        color: #eeeeee!important;
+      &:hover{
+        color: white!important;
+      }
+    }
+  }
+  .hide-sm{
+    display: none!important;
+  }
+
+  .bw0-sm{
+    border-width: 0px!important;
+  }
+
+  .plr0-sm{
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+  }
+
+  .mt10-sm{
+    margin-top: 10px;
+  }
+  .set-vh-sm{
+    overflow-y: scroll;
+    max-height: 430px;
+  }
+
+  .mlr10-sm{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .plr10-sm{
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+  }
+  .plr5-sm{
+    padding-left: 5px!important;
+    padding-right: 5px!important;
+  }
+} 
+
+.overlay_bg { 
+opacity: 0.5; 
+}
+
+.bt0{
+  border-top: 0px!important;
+}

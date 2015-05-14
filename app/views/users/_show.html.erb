@@ -1,0 +1,723 @@
+                      <!-- content -->                      
+                        <div class="row">
+                          
+                         <!-- main col left --> 
+                         <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 plr0-sm">
+                           
+                              <!-- START Widget Panel -->
+                         <div class="widget panel bw0-sm">
+                            <!-- Thumbnail -->
+                            <div class="thumbnail">
+                                <!-- media -->
+                                <div class="media default_pic" id="default_pic">
+                                    <%= render  'users/default_pic' %>
+                                </div>
+                                <!--/ media -->
+                            </div>
+                            <!--/ Thumbnail -->
+                             <!-- meta -->
+                                    <span class="meta bottom">
+                                        <h4 class="semibold mt10 text-center"><%= current_user.name %>
+                                        </h4>
+                                    </span>
+                            <!--/ meta -->
+                            <!-- blockquote -->
+                            <div class="m10-p10">
+                                
+                                <blockquote class="mt5 text-center m0-p10">
+                                    <p class="font-15"   >
+                                      <a href="#" id="xe_status" data-type="textarea" data-pk="1" class="text-default" ><%= current_user.status %></a>
+                                    </p>
+                                </blockquote>
+                            </div>
+                                <!--/ blockquote -->
+                            <!-- panel body -->
+                            <div class="panel-body np">
+                                 <!-- Nav section -->
+                                <ul class="nav nav-section nav-justified">
+                                    <li>
+                                        <div class="section">
+                                            <h4 class="nm">
+                                              <i class="flaticon-add185 icon-grey img-responsive center_block icon-font-30"></i>
+                                            </h4>
+                                            <h4 class="nm mt5 icon-grey"><%= current_user.rels(dir: :incoming, type: "likes").count %></h4>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="section">
+                                            <h4 class="nm">
+                                              <i class="flaticon-medal3 icon-grey img-responsive center_block icon-font-35"></i>
+                                            </h4>
+                                            <h4 class="nm mt5 icon-grey"><%= current_user.getBadges.where(status: true).count %></h4>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="section">
+                                            <h4 class="nm">
+                                              <i class="flaticon-quill1 icon-grey img-responsive center_block icon-font-35"></i></h4>
+                                            <h4 class="nm mt5 icon-grey"><%= @testimonials.nil? ? 0 : @testimonials.count %></h4>
+                                        </div>
+                                    </li>
+                                    <li class="">
+                                        <div class="section">
+                                            <h4 class="nm">
+                                              <i class="ico-map-marker icon-grey img-responsive center_block icon-font-35"></i></h4>
+                                            <h4 class="nm mt5 icon-grey"><%= @locations.nil? ? 0 : @locations.count %></h4>
+                                        </div>
+                                    </li>                                    
+                                    <li class="dis-none-imp">
+                                        <div class="section">
+                                            <h4 class="nm">
+                                              <i class="flaticon-stack21 icon-grey img-responsive center_block icon-font-35"></i></h4>
+                                            <h4 class="nm mt5 icon-grey"><%= @pictures.nil? ? 0 : @pictures.count %></h4>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="section">
+                                            <h4 class="nm">
+                                              <i class="ico-star icon-grey img-responsive center_block icon-font-35"></i></h4>
+                                            <h4 class="nm mt5 icon-grey"><%= @interests_count.nil? ? 0 : @interests_count %></h4>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <!--/ Nav section -->
+                                  <div class="panel panel-minimal nm">
+          
+                                      <!-- START Bio -->
+                                      <div class="panel-toolbar-wrapper hidden-md hidden-lg">
+                                          <div class="panel-toolbar">
+                                              <h5 class="semibold nm icon-black-lite"><i class="ico-info2 mr5"></i>About me</h5>
+                                          </div>
+                                      </div>
+                                      <div class="panel-body pt0  hidden-md hidden-lg">
+                                          <p class="semibold mb5 icon-black">
+                                            <a href="#" class="xe_about_me text-default" data-type="textarea" data-pk="1" ><%= current_user.about_me %></a>
+                                          </p>
+                                          
+                                      </div>
+                                      <!--/ END Bio -->
+                                  </div>
+                            </div>
+                            <!--/ panel body -->
+                        </div>
+                        <!--/ END Widget Panel -->
+                        
+                        
+
+                              <div class="panel panel-default overflow-hidden mlr10-sm">
+                                                                  <!-- panel heading/header -->
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title">My pictures</h3>
+                                      <!-- panel toolbar -->
+                                      <div class="panel-toolbar text-right">
+                                           <!-- option -->
+                                              
+                                          <div class="option">
+                                                <a  href="#pics_modal" role="button" data-toggle="modal" class="btn demo a-color-inherit" id="pics_link">
+                                                  <i class="ico-pencil"></i>
+                                                </a> 
+                                                <a  href="#profile_pic_modal" role="button" data-toggle="modal" class="btn demo a-color-inherit">
+                                                  <i class="ico-upload2"></i>
+                                                </a>              
+                                          </div>
+                                          <!--/ option -->
+                                      </div>
+                                      <!--/ panel toolbar -->
+                                  </div>
+                                  <!--/ panel heading/header -->
+                                  <hr class="nm"><!-- horizontal line -->
+                                  <div class="images_div" href="#">
+                                    <%= render 'pictures/pics_grid' %>
+                                  </div>
+                              </div>
+
+                              <div class="panel panel-default overflow-hidden mlr10-sm hide">
+                                                                  <!-- panel heading/header -->
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title">Dating requests</h3>
+
+                                  </div>
+                                    <h5 class="nm icon-black-lite">
+                                  <div class="panel-toolbar pt10 pb10 pl10">
+                                    <i class="flaticon-couple8 mr5 font-20"></i>
+                                    <span class="semibold">Looking for a Date?</span> 
+                                    <span id="godate_div" class="ml15">
+                                      <%= render 'users/godate' %>
+                                    </span>
+                                  </div>
+                                    </h5>
+                                  <!--/ panel heading/header -->
+                                  <hr class="nm"><!-- horizontal line -->
+                                    <%= render 'users/date_status_list' %>
+                              </div>
+                          
+                          </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-5 col-lg-5 plr0-sm">
+                              <!-- START panel -->
+                              <div class="panel panel-default mlr10-sm">
+                                  <!-- panel heading/header -->
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title"> <i class="ico-quill2"></i> Testimonial</h3>
+                                  </div>
+                                  <!--/ panel heading/header -->
+                                  
+                                  <!-- panel body with collapse capable -->
+                                  <div class="panel-collapse pull out">
+                                      <div class="panel-body" id="testimonials_block">
+                                                 <%= render partial: "users/testimonials", :locals => {:user => current_user} %> 
+                                                 
+                                      </div>
+                                  </div>
+                                  <!--/ panel body with collapse capabale -->
+
+                                  <!-- Loading indicator -->
+                                  <div class="indicator"><span class="spinner"></span></div>
+                                  <!--/ Loading indicator -->
+                              </div>
+                              <!--/ END panel -->
+
+                              <!-- START panel -->
+                              <div class="panel panel-default mlr10-sm">
+                                  <!-- panel heading/header -->
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title"><i class="ico-map-marker"></i> Location </h3>
+                                      <!-- panel toolbar -->
+                                      <div class="panel-toolbar text-right">
+                                          <!-- option -->
+                                              
+                                          <div class="option">
+                                                <a  href="#address_modal" role="button" data-toggle="modal" class="btn demo a-color-inherit" id="address_link">
+                                                  <i class="ico-plus-circle"></i>
+                                                </a>              
+                                          </div>
+                                          <!--/ option -->
+                                      </div>
+                                      <!--/ panel toolbar -->
+                                  </div>
+                                  <!--/ panel heading/header -->
+                                  
+                                  <!-- panel body with collapse capable -->
+                                  <div class="panel-collapse pull out">
+                                      <div class="panel-body" id="places_block">
+                                          <%= render partial: "locations/places_plain", :locals => {:user => current_user} %>
+                                      </div>
+                                  </div>
+                                  <!--/ panel body with collapse capabale -->
+
+                                  <!-- Loading indicator -->
+                                  <div class="indicator"><span class="spinner"></span></div>
+                                  <!--/ Loading indicator -->
+                              </div>
+                              <!--/ END panel -->
+
+                              <!-- START panel -->
+                              <div class="panel panel-default mlr10-sm">
+                                  <!-- panel heading/header -->
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title"><i class="ico-star"></i> Interests</h3>
+                                      <!-- panel toolbar -->
+                                      <div class="panel-toolbar text-right">
+                                          <!-- option -->
+                                              
+                                          <div class="option">
+                                                <a  href="#interest_modal" role="button" data-toggle="modal" class="btn demo a-color-inherit" id="address_link">
+                                                  <i class="ico-plus-circle"></i>
+                                                </a>              
+                                          </div>
+                                          <!--/ option -->
+                                      </div>
+                                      <!--/ panel toolbar -->
+                                  </div>
+                                  <!--/ panel heading/header -->
+                                  
+                                  <!-- panel body with collapse capable -->
+                                  <div class="panel-collapse pull out">
+                                      <div class="panel-body pb0" id="interests_block">
+                                        <% if @interests_count > 0 %>
+                                          <%= render partial: 'interests/interest' %>
+                                        <% else %>
+                                          <h5>No interests added</h5>
+                                        <% end %>
+                                      </div>
+                                  </div>
+                                  <!--/ panel body with collapse capabale -->
+
+                                  <!-- Loading indicator -->
+                                  <div class="indicator"><span class="spinner"></span></div>
+                                  <!--/ Loading indicator -->
+                              </div>
+                              <!--/ END panel -->
+
+
+                              <!-- START panel -->
+                              <div class="panel panel-default mlr10-sm">
+                                  <!-- panel heading/header -->
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title"><i class="ico-medal2"></i>Personality</h3>
+                                  </div>
+                                  <!--/ panel heading/header -->
+                                  
+                                  <!-- panel body with collapse capable -->
+                                  <div class="panel-collapse pull out">
+                                      <div class="panel-body" >
+                                      <!--<div  id="badges_req_block">
+                                          <%= render partial: "badges/requests", :locals => {:user => @user} %>
+                                      </div>-->
+                                      <div  id="badges_block">
+                                          <%= render partial: "badges/badges", :locals => {:user => @user} %>
+                                      </div>
+                                      </div>
+                                  </div>
+                                  <!--/ panel body with collapse capabale -->
+
+                                  <!-- Loading indicator -->
+                                  <div class="indicator"><span class="spinner"></span></div>
+                                  <!--/ Loading indicator -->
+                              </div>
+                              <!--/ END panel -->
+
+                          </div>
+
+                          <!-- Right Side / Bottom side -->
+                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 ">
+                        <div class="panel panel-minimal nm">
+
+                           <div class="panel-toolbar-wrapper dis-none-imp" id="date_div" >
+                              <div class="panel-toolbar">
+                                <h5 class="nm icon-black-lite"><i class="flaticon-couple8 mr5 font-20"></i><span class="semibold">Looking for a Date?</span> </h5>
+                              </div>
+                              <div id="godate_div">
+                                <%= render 'users/godate' %>
+                              </div>
+                          </div>
+                            <!-- START Bio -->
+                            <div class="panel-toolbar-wrapper hidden-sm hidden-xs">
+                                <div class="panel-toolbar">
+                                    <h5 class="semibold nm icon-black-lite"><i class="ico-info2 mr5"></i>About me</h5>
+                                </div>
+                            </div>
+                            <div class="panel-body pt0 pl0 pr0 hidden-sm hidden-xs">
+                                <p class="semibold mb5 ">
+                                  <a href="#" data-type="textarea" data-pk="1" class="text-default xe_about_me"><%= current_user.about_me %></a>
+                                </p>
+                                
+                            </div>
+                            <!--/ END Bio -->
+
+                            <hr class="hidden-sm hidden-xs"><!--horizontal line -->
+
+                            <!-- START like lists -->
+                            <div class="panel-toolbar-wrapper hide">
+                                <div class="panel-toolbar">
+                                    <h5 class="semibold nm icon-black-lite"><i class="ico-users3 mr5"></i>Followers</h5>
+                                </div>
+                            </div>
+                            <div class="panel-body pt0 hide">
+                                <div class="media-list media-list-contact">
+                                      <% @visit_rels = current_user.rels(dir: :incoming, type: "likes")  %>
+                                      <% if @visit_rels.count > 0 %>
+                                        <% @visit_rels.each do |rel| %>
+                                          <a href="/users/<%= rel.from_node.uuid %>/" class="media  main_container_load_indicator_show ">
+                                              <span class="media-object pull-left">
+                                                  <img src='<%= cloudinary_url( rel.from_node.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>' class="img-circle" alt="">
+                                              </span>
+                                              <span class="media-body">
+                                                  <span class="media-heading icon-grey"><%= rel.from_node.name %></span>
+                                                  <span class="media-meta"><%= timeago_tag rel.updated_at, :nojs => true, :limit => 10.days.ago %></span>
+                                              </span>
+                                          </a>
+                                        <% end %>
+                                      <% else %>
+                                        <p  class="nm">None</p>
+                                      <% end %>
+                                </div>
+                                <p class="nm dis-none-imp"><a href="javascript:void(0);" class="semibold">View all</a></p>
+                            </div>
+                            <!--/ END like lists -->
+                            <!-- START Friend lists -->
+                            <div class="panel-toolbar-wrapper">
+                                <div class="panel-toolbar">
+                                    <h5 class="semibold nm icon-black-lite"><i class="ico-users3 mr5"></i>Recent visitors</h5>
+                                </div>
+                            </div>
+                            <div class="panel-body pt0">
+                                <div class="media-list media-list-contact">
+                                      <% @visit_rels = current_user.rels(dir: :incoming, type: "visits")  %>
+                                      <% if @visit_rels.count > 0 %>
+                                        <% @visit_rels.each do |rel| %>
+                                          <a href="/users/<%= rel.from_node.uuid %>/" class="media  main_container_load_indicator_show ">
+                                              <span class="media-object pull-left">
+                                                  <img src='<%= cloudinary_url( rel.from_node.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>' class="img-circle" alt="">
+                                              </span>
+                                              <span class="media-body">
+                                                  <span class="media-heading icon-grey"><%= rel.from_node.name %></span>
+                                                  <span class="media-meta"><%= timeago_tag rel.updated_at, :nojs => true, :limit => 10.days.ago %></span>
+                                              </span>
+                                          </a>
+                                        <% end %>
+                                      <% else %>
+                                        <p  class="nm">None</p>
+                                      <% end %>
+                                </div>
+                                <p class="nm dis-none-imp"><a href="javascript:void(0);" class="semibold">View all</a></p>
+                            </div>
+                            <!--/ END Friend lists -->
+                        </div>
+                    </div>
+                    <!--/ Right side / bottom side -->
+
+                       </div>
+          <!--/row-->
+
+<!--post modal-->
+<%= form_for(MyLocation.new, remote: true)  do |f| %>
+<div id="address_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <b>Add Location</b>
+      </div>
+      <div class="modal-body pb0">
+      <div class="form-group mb0">
+          <div class="input-group">
+                  <div class="col-sm-12 dis-none-imp">
+                    <label class="col-sm-2 control-label mt5">Type</label>
+                    <div class="col-sm-4">
+                      <%= f.select :place_type, options_for_select([ "Work", "Education", "Home", "Other" ], "Other") %>
+                    </div>
+                    <label class="col-sm-2 control-label mt5 pl0 pr0" title="Currently working / Studying / Residing ">Current place</label>
+                    <div class="col-sm-4 mt5" >
+                      <span class=" custom-radio custom-radio-warning mr15">
+                          <%= f.radio_button :current_place, true, :checked => true, id: "current_place_yes" %> 
+                          <label for="current_place_yes">&nbsp;&nbsp;Yes</label>  
+                      </span>
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                          <%= f.radio_button :current_place, false , id: "current_place_no"%>
+                          <label for="current_place_no">&nbsp;&nbsp;No</label>  
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 dis-none-imp">
+                    <label class="col-sm-2 control-label mt15">Details</label>
+                    <div class="col-sm-10">
+                      <%= f.text_field :details , class: "form-control mt10" %>
+                      <span class="help-block mb0">Working as / Studying at / other details </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <!-- <label class="col-sm-2 control-label mt15">Name</label> -->
+                    <span class="">
+                      <%= f.text_field :name , class: "form-control mt10 mb15", :placeholder => "Name" %>
+                    </span>
+                  </div>
+            </div>
+        </div>
+      <div class="form-group ">
+        <!-- <%= label_tag :search, "Search For Address" %> -->
+        <%= f.text_field :address, class: "span12 search-query form-control input-lg", type: "search", :placeholder => "Search for the location... "  %>
+      </div>
+      <%= hidden_field_tag 'location_name' %>
+      <%= f.hidden_field 'latitude'  %>
+      <%= f.hidden_field 'longitude' %>
+      <%= f.hidden_field 'place_id' %>
+      <%= f.hidden_field 'city' %>
+      <%= f.hidden_field 'country' %>
+      <%= f.hidden_field 'id_loc' %>
+      <%= hidden_field_tag "user_id", "#{@user.uuid}"  %>
+      <div class="form-group googlemap mb0">
+        <%= render partial: "locations/googlemap" %>
+      </div>
+      </div>
+      <div class="modal-footer">
+          <div>
+          <button type="button"  class="btn btn-primary btn-sm" id="address_submit">Add</button>
+      </div>  
+      </div>
+  </div>
+</div>
+</div>
+<% end %>
+
+
+
+<!--Interest modal-->
+<%= form_for(Interest.new , remote: true)  do |f| %>
+<div id="interest_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="semibold mt0 mb0">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      Add Interest</h5>
+      </div>
+      <div class="modal-body">
+          <!-- <form class="form center-block"> -->
+          <%= hidden_field_tag "user_id", "#{@user.uuid}"  %>
+          <div class="form-group">
+            <div class="panel">
+              <div class="panel-body">
+                  <div class="btn-tag int-pg-1">
+                    <% ["Adventure","Art & Craft","Blogging","Board games","Cooking","Driving / Riding","Exploring","Fitness","Foodie","Gardening","Gym","Martial arts","Mechanic","Movies","Music","Pet lover" ,"Photography","Playing instument","Puzzle solving","Books","Shopaholic","Sports","Singing","Video games","Yoga","Other"].each do |k| %>
+                            <a href="javascript:void(0);" class="btn btn btn-teal btn-outline mb5 btn-sm interest-btn"><%= "#{k}"  %></a>
+                             
+                     <% end %>
+                    </div>
+                  <div class="input-group int-pg-2">
+                    <label class="col-sm-3 control-label mt10">Type</label>
+                    <div class="col-sm-9">
+                      <%= f.text_field 'interestType', class: "form-control mt10", readonly: true, id: "new_interestType" %>
+                    </div>
+                    <label class="col-sm-3 control-label mt10">More specific</label>
+                    <div class="col-sm-9">
+                      <%= f.text_field 'interestSubType' , class: "form-control mt10"%>
+                      <span class="help-block">Eg. if Type selected is 'Sports', More specific description can be 'Football' </span>
+                    </div>
+                    <!-- <label class="col-sm-3 control-label mt10">Level</label>
+                    <div class="col-sm-9 mt10" >
+                      <span class=" custom-radio custom-radio-teal mr15">  
+                        <input type="radio" id="rateradio1" value="1" name="rate" checked />  
+                        <label for="rateradio1">&nbsp;&nbsp;Beginner</label>   
+                      </span>
+                      <span class=" custom-radio custom-radio-teal mr15">  
+                        <input type="radio" id="rateradio2" value="2" name="rate"  />  
+                        <label for="rateradio2">&nbsp;&nbsp;Intermediate</label>   
+                      </span>
+                      <span class=" custom-radio custom-radio-teal">  
+                        <input type="radio" id="rateradio3" value="3" name="rate"  />  
+                        <label for="rateradio3">&nbsp;&nbsp;Professional</label>   
+                      </span>
+                    </div> -->
+                    <label class="col-sm-12 control-label">About</label>
+                    <div class="col-sm-12">
+                      <%= f.text_area 'about' , class: "form-control mt10" %>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- </form> -->
+      </div>
+      <div class="modal-footer">
+          <div id="interest_submit_div" class="dis-none-imp" >
+          <button type="reset" class="btn btn-warning mb5 pull-left" id="interest-back-btn">Back</button>
+          <button type="submit" class="btn btn-primary ladda-button mb5" data-style="expand-right" id="interest_submit_btn"><span class="ladda-label">Submit</span><span class="ladda-spinner"></span></button>
+          
+          </div>  
+      </div>
+  </div>
+</div>
+</div>
+<% end %>
+
+<div id="profile_pic_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+
+    <div id="upload_pic">
+      <%= render 'pictures/upload_pic'%>
+    </div>
+
+  </div>
+</div>
+</div>
+
+<div id="pics_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      Profile pictures
+      <a href="/pictures/import_fb_pictures" class="ml50 btn btn-success ladda-button mt10-sm" data-style="expand-right" id="import_fb_pics" data-remote="true" ><span class="ladda-label">Import pictures from Facebook</span></a>
+      </div>
+      <div class="modal-body set-vh-sm" id="pics_modal_body">
+              <div class="indicator"><span class="spinner" /></div>
+      </div>
+
+      <div class="modal-footer">
+          <div>
+            <button type="button" data-dismiss="modal" aria-hidden="true" class="btn btn-primary btn-sm" id="close_pics_modal">Close</button> 
+          </div>  
+      </div>
+  </div>
+</div>
+</div>
+
+<script>
+ 
+  $("#li_profile").addClass("active");
+//  $("#minimize_sidebar_a").click();
+
+
+$('#pics_link').click(function(){
+  $("#pics_modal_body").empty();
+  $("#pics_modal_body").html("<h4 class='text-center'> Loading... </h4>");
+  $.getScript( "pictures/pics_edit");
+});
+
+
+  $('.upload_field').unsigned_cloudinary_upload("shyhero", 
+    { cloud_name: 'rashi', tags: 'uploads' }, 
+    { multiple: false }
+  ).bind('cloudinarydone', function(e, data) {
+
+    $('.thumbnails').append($.cloudinary.image(data.result.public_id, 
+      { format: 'jpg', width: 150, height: 100, 
+        crop: 'thumb', gravity: 'face', effect: 'saturation:50' } ))}
+
+  ).bind('cloudinaryprogress', function(e, data) { 
+
+    $('.progress_bar').css('width', 
+      Math.round((data.loaded * 100.0) / data.total) + '%'); 
+
+  });
+
+
+      $("[data-toggle~=unveil]").unveil(200, function () {
+                    $(this).load(function () {
+                        $(this).addClass("unveiled");
+                    });
+                });
+
+       $('.autocomplete').autocomplete({
+        minLength: 3,
+        source: function(request, response) {
+          return $.ajax({
+            url: $('.autocomplete').data('autocomplete'),
+            dataType: "json",
+            data: {
+              address: request.term
+            },
+            success: function(data) {
+              return response(data);
+            }
+          });
+        }
+      });
+
+$("#address_submit").click(function(){
+  $(this).closest('form').submit();
+  $(this).addClass("disabled"); 
+});
+
+
+    //turn to inline mode
+$.fn.editable.defaults.mode = 'inline';
+
+    // user status - xeditable
+    // ================================
+
+    $("#xe_status").editable({
+        title: "Enter status",
+           rows: 5,
+           url: '/users/<%= current_user.uuid %>/update_status', 
+           ajaxOptions: {
+               dataType: 'json' //assuming json response
+           },           
+           success: function(data, config) {
+               if(data && data.id) {  //record created, response like {"id": 2}
+                   //set pk
+                    //$(this).editable('option', 'pk', data.id);
+                   //remove unsaved class
+                   $(this).removeClass('editable-unsaved');
+                   //show messages
+                  // var msg = 'Updated successfully.';
+                  // $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
+                   $('#save-btn').hide(); 
+                   $(this).off('save.newuser');                     
+               } else if(data && data.errors){ 
+                   //server-side validation error, response like {"errors": {"username": "username already exist"} }
+                   config.error.call(this, data.errors);
+               }               
+           },
+           error: function(errors) {
+               var msg = '';
+               if(errors && errors.responseText) { //ajax error, errors = xhr object
+                   msg = errors.responseText;
+               } else { //validation error (client-side or server-side)
+                   $.each(errors, function(k, v) { msg += k+": "+v+"<br>"; });
+               } 
+               $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
+           }
+       });
+
+     $(".xe_about_me").editable({
+        title: "Enter status",
+           rows: 5,
+           url: '/users/<%= current_user.uuid %>/update_about_me', 
+           ajaxOptions: {
+               dataType: 'json' //assuming json response
+           },           
+           success: function(data, config) {
+               if(data && data.id) {  //record created, response like {"id": 2}
+                   //set pk
+                    //$(this).editable('option', 'pk', data.id);
+                   //remove unsaved class
+                   $(this).removeClass('editable-unsaved');
+                   //show messages
+                  // var msg = 'Updated successfully.';
+                  // $('#msg').addClass('alert-success').removeClass('alert-error').html(msg).show();
+                   $('#save-btn').hide(); 
+                   $(this).off('save.newuser');                     
+               } else if(data && data.errors){ 
+                   //server-side validation error, response like {"errors": {"username": "username already exist"} }
+                   config.error.call(this, data.errors);
+               }               
+           },
+           error: function(errors) {
+               var msg = '';
+               if(errors && errors.responseText) { //ajax error, errors = xhr object
+                   msg = errors.responseText;
+               } else { //validation error (client-side or server-side)
+                   $.each(errors, function(k, v) { msg += k+": "+v+"<br>"; });
+               } 
+               $('#msg').removeClass('alert-success').addClass('alert-error').html(msg).show();
+           }
+       });
+
+$( ".search-query" ).keypress(function() {
+  if ($(".search-query").val().length > 0) { $("#address_submit").show(); } else{ $("#address_submit").hide(); }
+  if (event.keyCode == 13)   {return false;} 
+});
+
+$('.search-query').keydown(function(e) {
+  if ($(".search-query").val().length > 1) { $("#address_submit").show(); } else{ $("#address_submit").hide(); }
+});
+
+$('.search-query').blur(function(e) {
+  if ($(".search-query").val().length > 1) { $("#address_submit").show(); } else{ $("#address_submit").hide(); }
+});
+
+$("#address_submit").hide(); 
+$(".int-pg-2").hide(); 
+$("#interest-back-btn").hide(); 
+
+$("#interest-back-btn").click(function(){
+  $(".int-pg-1").show(); 
+  $(".int-pg-2").hide(); 
+  $(this).hide();
+});
+
+$(".interest-btn").click(function(){
+  $(this).parent().children('a').removeClass("btn-outline");
+  $(this).parent().children('a').addClass("btn-outline");
+  $(this).removeClass("btn-outline");
+  $("#new_interestType").val($(this).text());
+  $("#interest_submit_div").removeClass('dis-none-imp');
+  $("#interest-back-btn").show(); 
+  $(".int-pg-2").show(); 
+  $(".int-pg-1").hide(); 
+  
+});
+
+$("#interest_submit_btn").click(function(e){
+  $("#interest_submit_btn").addClass("disabled");
+})
+
+$("#import_fb_pics").click(function(e){
+  $("#import_fb_pics").addClass("disabled");
+})
+
+</script>

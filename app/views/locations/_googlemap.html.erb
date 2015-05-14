@@ -1,0 +1,210 @@
+<script src="https://maps.googleapis.com/maps/api/js?sensor=true&libraries=places" type="text/javascript"></script>
+
+<div id="googlemap" ></div>
+
+<script type="text/javascript">	
+<!--
+  var defaultZoom = 16; // Why zoomed in? Because it looks good.
+  
+  // create map and add controls
+  var mapOptions = {
+   // center: new google.maps.LatLng(12.9667, 77.5667),
+    zoom: defaultZoom,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    scrollwheel: false,
+    scaleControl: false
+  };
+  var map = new google.maps.Map(document.getElementById('googlemap'),mapOptions);
+	
+	// I'm Centering the map in Bangkok
+	// '13.731547730050778'
+	// '100.56798934936523'
+	var mylat = document.getElementById("my_location_latitude").value;
+	var mylng = document.getElementById("my_location_longitude").value;
+  if (jQuery.isEmptyObject(mylat)) {
+ //    mylat = '12.9667';
+ //    mylng = '77.5667';
+    var defaultZoom = 16;
+  };
+  if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    };
+    function showPosition(position) {
+         mylat = position.coords.latitude;
+         mylng = position.coords.longitude;
+  }
+
+  google.maps.event.addListenerOnce(map, 'idle', function() {
+     google.maps.event.trigger(map, 'resize');
+  });
+
+  // set center point of map to be of the Marker or the Default City
+  var centrePoint = new google.maps.LatLng(mylat, mylng);
+  map.setCenter(centrePoint);
+  map.setZoom(defaultZoom); 
+
+	
+	// add a draggable marker
+  marker = new google.maps.Marker({
+    map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+    position: centrePoint
+  });
+
+  var defaultImage = new google.maps.MarkerImage(
+      "https://maps.gstatic.com/mapfiles/place_api/icons/geocode-71.png",
+      new google.maps.Size(71, 71),
+      new google.maps.Point(0, 0),
+      new google.maps.Point(17, 34),
+      new google.maps.Size(35, 35));
+  marker.setIcon(defaultImage);
+	
+  google.maps.event.addListener(marker, 'click', toggleBounce);
+	
+	// create Info window for marker
+  var infowindow = new google.maps.InfoWindow();
+  
+  // Address Autocomplete
+  var input = document.getElementById('my_location_address');
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  
+	// add a drag listener to the map
+	google.maps.event.addListener(marker, "dragend", function() {
+		var point = marker.getPosition();
+		map.panTo(point);
+		document.getElementById("my_location_latitude").value = point.lat();
+		document.getElementById("my_location_longitude").value = point.lng();
+		infowindow.close();
+    marker.setIcon(defaultImage);
+  });
+  var place;
+  var photos;
+
+  // Autocomplete Listener
+  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+    place = autocomplete.getPlace();
+    marker.setPosition(place.geometry.location);
+    map.panTo(place.geometry.location);
+    map.setZoom(16);
+		document.getElementById("my_location_latitude").value = place.geometry.location.lat();
+		document.getElementById("my_location_longitude").value = place.geometry.location.lng();
+		
+		// Sets the proper image on the marker. ie. school/hospital marker
+		var image = new google.maps.MarkerImage(
+        place.icon,
+        new google.maps.Size(71, 71),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(17, 34),
+        new google.maps.Size(35, 35));
+    marker.setIcon(image);
+    marker.setPosition(place.geometry.location);
+
+    var address = '';
+    if (place.address_components) {
+      address = [(place.address_components[0] &&
+                  place.address_components[0].short_name || ''),
+                 (place.address_components[1] &&
+                  place.address_components[1].short_name || ''),
+                 (place.address_components[2] &&
+                  place.address_components[2].short_name || '')
+                ].join(' ');
+    }
+
+    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+    infowindow.open(map, marker);
+    
+    // Autofill the fields in the form. TODO: improve parsing of the returned JSON data.
+    var address = place.address_components;
+    var website = place.url;
+
+    if (address[address.length - 1]) {
+      var zipcode = address[address.length - 1].long_name;
+    };
+    if (address[address.length - 2]) {
+      var country = address[address.length - 2].long_name;
+    };
+    if (address[address.length - 3]) {
+      var city = address[address.length - 3].long_name;
+    };
+    if (address[address.length - 4]) {
+      var sublocality = address[address.length - 4].long_name;
+    };
+    if (address[0]) {
+      var streetnumber = address[0].long_name;
+    };
+    if (address[1]) {
+      var streetname = address[1].long_name;
+    };
+    if (place.name) {
+      var location_name = place.name;
+    }
+    if (place.place_id) { 
+      var place_id = place.place_id;
+    }
+    if (place.id) {
+      var id_loc = place.id;
+    }
+    var formatted_address = place.formatted_address;
+    var formatted_phone_number = place.formatted_phone_number;
+    
+/*    if (zipcode){
+      document.getElementById("location_postcode").value = zipcode;
+    }
+    if (sublocality) {
+      document.getElementById("location_district").value = sublocality;
+    }
+    if (streetname) {
+      document.getElementById("location_address").value = streetname;
+    }
+    if (formatted_phone_number) {
+      document.getElementById("location_phone_number").value = formatted_phone_number;
+    }
+    if (location_name) {
+      document.getElementById("location_search").value = location_name;
+    }
+    */
+    if (city) {
+      document.getElementById("my_location_city").value = city;
+    }
+    if (country) {
+      document.getElementById("my_location_country").value = country;
+    }
+    if (location_name) {
+      document.getElementById("location_name").value = location_name;
+      document.getElementById("my_location_name").value = location_name;
+    }
+    if (place_id) {
+      document.getElementById("my_location_place_id").value = place_id;
+    }
+    if (id_loc) {
+      document.getElementById("my_location_id_loc").value = id_loc;
+    }
+    photos = place.photos;
+    /*$('#place_images').empty();
+    for (var i = 0; i < photos.length; i++) {
+      var url = photos[i].getUrl({maxHeight: "1280", maxWidth: "1280"});
+      $('#place_images').prepend('<img src="' + url + '"/>');
+    }*/
+  });
+  
+  // This is the function to animate the marker after dropping it.
+  function toggleBounce() {
+    if (marker.getAnimation() != null) {
+      marker.setAnimation(null);
+    } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  };
+
+
+$('#address_modal').on('shown.bs.modal', function () {
+  google.maps.event.trigger(map, 'resize');
+  // also redefine center
+  map.setCenter(centrePoint);
+});
+//-->
+</script>
+
+<br />

@@ -1,0 +1,9 @@
+                          <% unless @user.godate_status? %>
+                              <span class=" pt0 text-center">
+                                 <a href="/users/<%= @user.uuid %>/set_godate?godate=yes" class="btn btn-success mb5" data-remote="true" >Yes, I'm </a>
+                            </span>
+                          <% else %>
+                            <span class=" pt0 text-center">
+                                 <a href="/users/<%= @user.uuid %>/set_godate?godate=no" class="btn btn-success mb5" data-remote="true" >No, I'm not</a>
+                            </span>
+                          <% end %>

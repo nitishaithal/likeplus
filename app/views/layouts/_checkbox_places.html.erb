@@ -1,0 +1,8 @@
+                                        <% current_user.places.each do |location| %>
+                                          <li class="no-decor mb5">
+                                            <span class="checkbox custom-checkbox custom-checkbox-inverse">
+                                                <%= check_box_tag 'location_ids[]', location.place_id , true, :id => "location_ids_#{location.id}" %>
+                                                <label for="location_ids_<%= location.id %>">&nbsp;&nbsp;<%= location.address %></label>
+                                            </span>
+                                          </li>
+                                        <% end %>

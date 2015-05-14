@@ -1,0 +1,23 @@
+<div class="tab-pane">
+<!-- Message list -->
+<div class="media-list">
+
+    <% unless users_list.blank? %>
+        <% users_list.each do |user| %>
+            <a href="javascript:void(0);" class="media border-dotted">
+                <span class="pull-left">
+                    <img class="img-circle img-bordered-success" src='<%= cloudinary_url( user.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>' alt="<%= user.name %>" width="50px" height="50px" >
+                </span>
+
+                <span class="media-body">
+                    <span><br></span>
+                    <h4 class="media-heading"><%= user.name %></h4>
+                </span>
+            </a>
+        <% end %>
+    <% else %>
+        <h5 class="text-center ">-- empty --</h5>
+    <% end %>
+</div>
+<!--/ Message list -->
+</div>

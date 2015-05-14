@@ -1,0 +1,116 @@
+<% if expressed_interest(@user).blank? %>
+<div class="panel-toolbar">
+	<h5 class="nm icon-black-lite"><i class="flaticon-couple8 mr5 font-20"></i><span class="semibold">Intrested in dating me?</span> </h5>
+</div>
+<div class="panel-body pt0 text-center">
+	<a href="/users/<%= @user.uuid %>/godate?godate=yes" class="btn btn-success mb5" data-remote="true" >Yes</a>
+</div>
+<% else %>
+	<% if date_interested_both(@user).blank? %>
+		<div class="panel-toolbar">
+			<h5 class="nm icon-black-lite"><i class="flaticon-couple8 mr5 font-20"></i><span class="semibold">Do you want to revoke your interest expression?</span> </h5>
+		</div>
+		<br>
+		<div class="panel-body pt0 text-center">
+			<a href="/users/<%= @user.uuid %>/godate?godate=no" class="btn btn-success mb5" data-remote="true" >Revoke</a>
+		</div>
+	<% else %>
+		<div class="panel-toolbar">
+			<h4 class="semibold nm text-danger"><i class="ico-heart mr5"></i>You both are interested to date eachother</h4><br>
+			<h5 class="nm icon-black-lite dis-none"><i class="flaticon-couple8 mr5 font-20"></i><span class="semibold">Do you like to chat?</span> </h5>
+		</div>
+		<br>
+		<div class="panel-body pt0 text-center dis-none">
+			<%= link_to "Chat", "#", class: "btn btn-success start-conversation mb5", "data-sid" => current_user.uuid, "data-rip" => @user.uuid %>
+		</div>
+	<% end %>
+<% end %>
+
+<script type="text/javascript">
+
+    $('.start-conversation').click(function (e) {
+        e.preventDefault();
+
+        var sender_id = $(this).data('sid');
+        var recipient_id = $(this).data('rip');
+
+/*        $.post("http://chattyboy.herokuapp.com/conversations", { sender_id: sender_id, recipient_id: recipient_id }, function (data) {
+        	console.log(data);
+            chatBox.chatWith(data.conversation_id);
+        });*/
+
+        // Using YQL and JSONP
+			$.ajax({
+			    //url: "http://chattyboy.herokuapp.com/conversations",
+			 	type: "POST",
+			    url: "http://localhost:3003/conversations",
+			    // The name of the callback parameter, as specified by the YQL service
+			    //jsonp: "callback",
+			 
+			    // Tell jQuery we're expecting JSONP
+			    dataType: "json",
+			    crossDomain: true,
+			 
+			    // Tell YQL what we want and that we want JSON
+			    data: {
+			        sender_id: sender_id, recipient_id: recipient_id,
+			    },
+
+			 
+			    // Work with the response
+			    success: function( data ) {
+			        chatBox.chatWith(data.conversation_id);
+			        $.get("/conversations/"+data.conversation_id);
+			    }
+
+			});
+
+    });
+
+    /**
+     * Used to minimize the chatbox
+     */
+
+    $(document).on('click', '.toggleChatBox', function (e) {
+        e.preventDefault();
+
+        var id = $(this).data('cid');
+        chatBox.toggleChatBoxGrowth(id);
+    });
+
+    /**
+     * Used to close the chatbox
+     */
+
+    $(document).on('click', '.closeChat', function (e) {
+        e.preventDefault();
+
+        var id = $(this).data('cid');
+        chatBox.close(id);
+    });
+
+
+    /**
+     * Listen on keypress' in our chat textarea and call the
+     * chatInputKey in chat.js for inspection
+     */
+
+    $(document).on('keydown', '.chatboxtextarea', function (event) {
+
+        var id = $(this).data('cid');
+        chatBox.checkInputKey(event, $(this), id);
+    });
+
+    /**
+     * When a conversation link is clicked show up the respective
+     * conversation chatbox
+     */
+
+    $('a.conversation').click(function (e) {
+        e.preventDefault();
+
+        var conversation_id = $(this).data('cid');
+        chatBox.chatWith(conversation_id);
+    });
+
+</script>

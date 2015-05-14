@@ -1,0 +1,49 @@
+<% @badges.each do |badge| %>
+<div class="badge_div %>">	
+<ul class="list-table">
+	<li style="width:50px;" >
+		<a href="#" title=" <%= badge.giveBadges.name %>">
+		<img class="img-circle img-bordered-success" src='<%= cloudinary_url( badge.giveBadges.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>' alt="<%= badge.giveBadges.name %>" width="50px" height="50px" >
+		</a>
+	</li>
+	<li class="text-left">
+		<h5 class="nm ml10"><span class="semibold"><%= badge.giveBadges.name %></span></h5>
+		<p class="text-muted nm ml10 font-15"> <%= badge.comment %></p>
+	</li>
+	<% if current_user == @user %>
+	<li class="text-right width-20 valign-top ">
+		<a href='#badge_delete_modal_<%= badge.uuid %>' role="button" data-toggle="modal" class="badge-remove" >
+			<i class="ico-remove icon-silver"></i>
+		</a>
+		<div class="dis-none pull-right">
+				Sure?
+	      		<a href='/my_badges/<%= badge.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary btn-xs badge_delete_yes mt10" data-dismiss="modal" aria-hidden="true" >Yes</a>
+	      		<a class="pull-left btn btn-default badge_delete_no btn-xs mt10">No</a>
+	      	</div>
+	</li>
+	<% end %>
+</ul>
+<hr>
+
+</div>
+<script>
+
+</script>
+
+<% end %>
+
+<script>
+	$(".badge-remove").click(function(){
+		$(this).next('div').removeClass('dis-none');
+		$(this).addClass('dis-none');
+	});
+	$(".badge_delete_no").click(function(){
+		$(this).parent('div').addClass('dis-none');
+		$(this).parent('div').prev('a').removeClass('dis-none');
+	});
+	
+	$(".badge_delete_yes").click(function(){
+		$(this).closest('.badge_div').hide();
+	});
+
+</script>

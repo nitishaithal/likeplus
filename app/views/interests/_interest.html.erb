@@ -1,0 +1,156 @@
+<% cnt = 0 %>
+<% @interests.each do |i|  %>
+	<% cnt = cnt+1 %>
+	<address>
+		<h4 class="">
+						<% case "#{i.interestType}" %>
+						<% when "Adventure" %>
+							<i class="flaticon-climbing6"></i>
+						<% when "Art & Craft" %>
+							<i class="ico-palette"></i>
+						<% when "Blogging" %>
+							<i class="ico-blog2"></i>
+						<% when "Board games" %>
+							<i class="ico-grid"></i>
+						<% when "Cooking" %>
+							<i class="ico-cup"></i>
+						<% when "Driving / Riding" %>
+							<i class="ico-meter2"></i>
+						<% when "Exploring" %>
+							<i class="ico-steps"></i>
+						<% when "Fitness" %>
+							<i class="ico-bike"></i>
+						<% when "Foodie" %>
+							<i class="flaticon-restaurant35"></i>
+						<% when "Gardening" %>
+							<i class="flaticon-close29"></i>
+						<% when "Gym" %>
+							<i class="flaticon-exercise1"></i>
+						<% when "Martial arts" %>
+							<i class="flaticon-karate"></i>
+						<% when "Mechanic" %>
+							<i class="ico-tools"></i>
+						<% when "Movies" %>
+							<i class="ico-movie2"></i>
+						<% when "Music" %>
+							<i class="ico-music3"></i>
+						<% when "Pet lover" %>
+							<i class="ico-paw"></i>
+						<% when "Photography" %>
+							<i class="ico-camera3"></i>
+						<% when "Playing instument" %>
+							<i class="ico-piano"></i>
+						<% when "Puzzle solving" %>
+							<i class="ico-puzzle3"></i>
+						<% when "Books" %>
+							<i class="ico-books"></i>
+						<% when "Shopaholic" %>
+							<i class="ico-cart2"></i>
+						<% when "Sports" %>
+							<i class="ico-basketball"></i>
+						<% when "Singing" %>
+							<i class="ico-mic"></i>
+						<% when "Video games" %>
+							<i class="ico-gamepad4"></i>
+						<% when "Yoga" %>
+							<i class="ico-accessibility"></i>
+						<% else %>
+							<i class="ico-file2"></i>
+						<% end %>
+		<span class="semibold"><%= i.interestType %></span>  <span class="text-default font-15"> <%= i.interestSubType %></span>
+			<a href='#interest_edit_modal_<%= i.uuid %>' role="button" data-toggle="modal" class="pull-right dis-none-imp interest_edit">
+				<i class="ico-pencil icon-silver  font-10"></i>
+			</a>
+		</h4>
+		<% unless i.about.blank? %>
+			<span class="ml5 text-default"><%= i.about %></span>
+		<% end %>	
+	</address>
+	<% unless @interests_count == cnt %>
+		<hr class="mt10 mb10">
+	<%end%>
+
+	<!--Interest modal-->
+	<%= form_for(i, remote: true)  do |f| %>
+	<div id="interest_edit_modal_<%= i.uuid %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog">
+	  <div class="modal-content">
+	      <div class="modal-header">
+	      <h5 class="semibold mt0 mb0">
+	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	      Add Interest</h5>
+	      </div>
+	      <div class="modal-body">
+	          <!-- <form class="form center-block"> -->
+	          <div class="form-group">
+	            <div class="panel">
+	              <div class="panel-body">
+	                  <div class="input-group">
+	                    <label class="col-sm-3 control-label mt10">Type</label>
+	                    <div class="col-sm-9">
+	                      <%= f.text_field 'interestType', class: "form-control mt10", readonly: true %>
+	                    </div>
+	                    <label class="col-sm-3 control-label mt10">More specific</label>
+	                    <div class="col-sm-9">
+	                      <%= f.text_field 'interestSubType' , class: "form-control mt10"%>
+	                      <span class="help-block">Eg. if Type selected is 'Sports', More specific description can be 'Football' </span>
+	                    </div>
+	                    <label class="col-sm-12 control-label">About</label>
+	                    <div class="col-sm-12">
+	                      <%= f.text_area 'about' , class: "form-control mt10" %>
+	                    </div>
+	                  </div>
+	              </div>
+	            </div>
+
+	          </div>
+	          <!-- </form> -->
+	      </div>
+	      <div class="modal-footer">
+	      	<div class="interest-footer1">
+	      	<button class="pull-left btn btn-danger interest-delete">Delete</button>
+	          <button type="submit" class="btn btn-primary ladda-button mb5 interest_edit_submit_btn" data-style="expand-right" ><span class="ladda-label">Save</span><span class="ladda-spinner"></span></button>
+	      	</div>
+	      	<div class="interest-footer2 pull-right">
+	      		<a href='/interests/<%= i.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary ladda-button interest-delete-yes" data-style="expand-right" >Yes</a>
+	      		<a class="pull-left btn btn-default interest-delete-no">No</a>
+	      	</div>
+	      </div>
+	  </div>
+	</div>
+	</div>
+	<% end %>
+
+<% end %>
+<script>
+	$("address").hover(
+		 function() {
+			$(this).find('.interest_edit').removeClass("dis-none-imp");
+			}, function() {
+			$( this ).find('.interest_edit').addClass("dis-none-imp");
+			}
+		);
+
+	$(".interest_edit_submit_btn").click(function(){
+			  $(".modal").modal('hide');
+			  $("body").removeClass('modal-open');
+			});
+
+	$('.interest-footer2').hide();
+
+	$(".interest-delete").click(function(e){
+		e.preventDefault();
+		$(this).parent().hide('slow');
+		$(this).parent().next().show('slow');
+	});
+	$(".interest-delete-yes").click(function(){
+		$(".modal").modal('hide');
+		$("body").removeClass('modal-open');
+		$(this).parent().hide('slow');
+		$(this).parent().prev().show('slow');
+	});
+	$(".interest-delete-no").click(function(){
+		$(this).parent().hide('slow');
+		$(this).parent().prev().show('slow');
+	});
+</script>

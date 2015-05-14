@@ -1,0 +1,7 @@
+$("#places_block").html("<%= j render partial: 'locations/places_plain', :locals => {:user => current_user} %>");
+$("#ul_places").html("<%= j render partial: 'layouts/checkbox_places' %>");
+$("#address_submit").removeClass("disabled"); 
+$("#address_submit").hide(); 
+$(".search-query").val('');
+$("#new_my_location")[0].reset();
+$("#address_modal").modal('hide');

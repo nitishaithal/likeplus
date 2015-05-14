@@ -1,0 +1,85 @@
+        <!-- START Template Sidebar (Left) -->
+        <aside class="sidebar sidebar-left sidebar-menu">
+            <!-- START Sidebar Content -->
+            <section class="content slimscroll">
+                
+                <!-- START Template Navigation/Menu -->
+                <ul class="topmenu topmenu-responsive sidebar_ul" data-toggle="menu">
+                    <li id="li_home" >
+                        <a href="<%= new_people_around_users_path %>">
+                            <span class="figure"><i class="ico-home2"></i></span>
+                            <span class="text">People around</span>
+                        </a>
+                    </li> 
+                    <li id="li_timeline">
+                        <!--<a href="<%= timeline_user_path(current_user) %>" title="Timeline">-->
+                        <a href="<%= posts_path %>" title="Timeline">
+                            <span class="figure"><i class=" ico-menu6"></i></span>
+                            <span class="text">Timeline</span>
+                        </a>
+                    </li>
+                    <li id="li_profile">
+                        <a href="/" title="Profile">
+                            <span class="figure"><i class="ico-user2"></i></span>
+                            <span class="text">Profile</span>
+                        </a>
+                    </li>
+                    <li id="li_like_list">
+                        <a href="<%=  like_list_users_path %>" title="Like List">
+                            <span class="figure"><i class="ico-heart-empty"></i></span>
+                            <span class="text">Likes</span>
+                        </a>
+                    </li>
+                    <li id="li_crush_list">
+                        <a href="<%=  crush_list_users_path %>">
+                            <span class="figure"><i class="ico-heart"></i></span>
+                            <span class="text">Crushes</span>
+                        </a>
+                    </li>
+                    <li id="li_crush_list" class="hide">
+                        <a href="<%=  date_list_users_path %>">
+                            <span class="figure"><i class="ico-bubble-heart"></i></span>
+                            <span class="text">Date seekers</span>
+                        </a>
+                    </li>
+                    <li id="li_sign_out" data-no-turbolink>
+                        <a href="<%= signout_path %>" id="fb_signout" class="sign_out_fb" >
+                            <span class="figure"><i class="ico-exit"></i></span>
+                            <span class="text">Sign out</span>
+                        </a>
+                    </li>
+
+                    <li id="li_fb_friends" class="dis-none-imp">
+                        <a href="<%= friends_users_path %>" title="Facebook Friends">
+                            <span class="figure"><i class="ico-users2"></i></span>
+                            <span class="text">Facebook Friends</span>
+                        </a>
+                    </li>
+                    <li id="li_notifications" class="dis-none-imp">
+                        <a href="/">
+                            <span class="figure"><i class="ico-bell"></i></span>
+                            <span class="text">Notifications</span>
+                        </a>
+                    </li>
+                    <li id="li_messages" class="dis-none-imp">
+                        <a href="/">
+                            <span class="figure"><i class="ico-envelope-alt"></i></span>
+                            <span class="text">Messages</span>
+                        </a>
+                    </li>
+
+                </ul>
+                <!--/ END Template Navigation/Menu -->
+
+                <!--/ END Sidebar summary -->
+            </section>
+            <!--/ END Sidebar Container -->
+<script  type="text/javascript">
+    $(".sidebar_ul > li").click(function(){
+        $(this).parent().children("li").removeClass("active");
+        $(this).addClass("active");
+        $("#minimize_sidebar_a").click();
+    });
+</script>
+        </aside>
+        <!--/ END Template Sidebar (Left) -->

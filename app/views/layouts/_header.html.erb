@@ -1,0 +1,165 @@
+              <!-- START Template Header -->
+        <header id="header" class="navbar navbar-fixed-top">
+            <!-- START navbar header -->
+            <div class="navbar-header">
+                <!-- Brand -->
+                <a class="navbar-brand" href="javascript:void(0);">
+                    <!-- <span class="logo-figure"></span> -->
+                    <span class="logo-text"></span>
+                </a>
+                <!--/ Brand -->
+            </div>
+            <!--/ END navbar header -->
+
+            <!-- START Toolbar -->
+            <div class="navbar-toolbar clearfix">
+                <!-- START Left nav -->
+                <ul class="nav navbar-nav navbar-left">
+                    <!-- Sidebar shrink -->
+                    <li class="hidden-xs hidden-sm">
+                        <a href="javascript:void(0);" class="sidebar-minimize" data-toggle="minimize" title="Minimize sidebar">
+                            <span class="meta">
+                                <span class="icon"></span>
+                            </span>
+                        </a>
+                    </li>
+                    <!--/ Sidebar shrink -->
+
+                    <!-- Offcanvas left: This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
+                    <li class="navbar-main hidden-lg hidden-md hidden-sm">
+                        <a href="javascript:void(0);" data-toggle="sidebar" data-direction="ltr" rel="tooltip" title="Menu sidebar" id="minimize_sidebar_a">
+                            <span class="meta">
+                                <span class="icon"><i class="ico-paragraph-justify3"></i></span>
+                            </span>
+                        </a>
+                    </li>
+                    <!--/ Offcanvas left -->
+
+                   
+
+                    <!-- Search form toggler  -->
+                    <li class="li-search">
+                        <a href="javascript:void(0);" data-toggle="modal" data-target="#search_modal">
+                            <span class="meta">
+                                <span class="icon"><i class="ico-search"></i></span>
+                            </span>
+                        </a>
+                    </li>
+                    <!--/ Search form toggler -->
+                </ul>
+                <!--/ END Left nav -->
+
+                <!-- START navbar form -->
+                <div class="navbar-form navbar-left dropdown" id="dropdown-form">
+                    <form role="search">
+                        
+                        <div class="has-icon">
+                            <button class="btn btn-teal mt0 mb0 form-control-btn btn-outline" data-toggle="modal" data-target="#search_modal">Criteria</button>
+                            <input type="text" class="form-control" placeholder="Search application...">
+                            
+                            <i class="ico-search form-control-icon"></i>
+                        </div>
+                    </form>
+                                        <!-- search modal -->
+                </div>
+                <!-- START navbar form -->
+
+                <!-- START Right nav -->
+                <ul class="nav navbar-nav navbar-right hide-sm">
+                    <!-- Profile dropdown -->
+                    <li class="dropdown profile">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="meta">
+                                <span class="avatar"><img src="<%= cloudinary_url( current_user.default_pic, :width => 30, :height => 30, :crop => :fill, :gravity => :faces) %>" class="img-circle" alt="" /></span>
+                                <span class="text hidden-xs hidden-sm pl5"><%= current_user.name %></span>
+                                <span class="caret"></span>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="pa15">
+                                <h5 class="semibold hidden-xs hidden-sm">
+                                    <p class="nm">60%</p>
+                                    <small class="text-muted">Profile complete</small>
+                                </h5>
+                                <h5 class="semibold hidden-md hidden-lg">
+                                    <p class="nm"><%= current_user.name %></p>
+                                    <small class="text-muted">60% Profile complete</small>
+                                </h5>
+                                <div class="progress progress-xs nm mt10">
+                                    <div class="progress-bar progress-bar-warning" style="width: 60%">
+                                        <span class="sr-only">60% Complete</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="javascript:void(0);"><span class="icon"><i class="ico-user-plus2"></i></span> My Accounts</a></li>
+                            <li><a href="javascript:void(0);"><span class="icon"><i class="ico-cog4"></i></span> Profile Setting</a></li>
+                            <li><a href="javascript:void(0);"><span class="icon"><i class="ico-question"></i></span> Help</a></li>
+                            <li class="divider"></li>
+                            <li data-no-turbolink><a href="<%= signout_path %>" id="fb_signout" class="sign_out_fb" ><span class="icon"><i class="ico-exit"></i></span> Sign Out</a></li>
+                        </ul>
+                    </li>
+                    <!-- Profile dropdown -->
+
+                    <!-- Offcanvas right This menu will take position at the top of template header (mobile only). Make sure that only #header have the `position: relative`, or it may cause unwanted behavior -->
+                    <li class="navbar-main dis-none-imp">
+                        <a href="javascript:void(0);" data-toggle="sidebar" data-direction="rtl" rel="tooltip" title="Feed / contact sidebar">
+                            <span class="meta">
+                                <span class="icon"><i class="ico-users3"></i></span>
+                            </span>
+                        </a>
+                    </li>
+                    <!--/ Offcanvas right -->
+                </ul>
+                <!--/ END Right nav -->
+            </div>
+            <!--/ END Toolbar -->
+        </header>
+        <!--/ END Template Header -->
+       
+          <%= form_for([:search_criteria, current_user] , remote: true,  method: :get)  do %>
+            <!-- START modal-lg -->
+                <div id="search_modal" class="modal fade">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                  <h3 class="semibold modal-title text-primary">Search</h3>
+                                <p class="text-muted">Set the criteria to search</p>
+                            </div>
+                            <div class="modal-body">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label font-18">Gender</label>
+                                        <div class="col-sm-10 " >
+                                            <span class=" custom-radio custom-radio-primary mr15">  
+                                                <input type="radio" id="genderradio1" value="male" name="gender" <%= current_user.gender == 'female' ? 'checked' : '' %> >  
+                                                <label for="genderradio1">&nbsp;&nbsp;Male</label>   
+                                            </span>
+                                            <span class=" custom-radio custom-radio-primary">  
+                                                <input type="radio" id="genderradio2" value="female" name="gender" <%= current_user.gender == 'male' ? 'checked' : '' %>>  
+                                                <label for="genderradio2">&nbsp;&nbsp;Female</label>   
+                                            </span>
+                                        </div>
+                                    <label class="col-sm-12 control-label font-18">Location</label>
+                                    <br>
+                                      <ul class="" id="ul_places">
+                                        <%= render partial: 'layouts/checkbox_places' %>
+                                      </ul>
+                            </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" id="search_submit">Search</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+                <!--/ END modal-lg -->
+
+              <% end %>
+
+
+<script type="text/javascript">
+$('input[type="submit"]').click(function(){
+  $(this).button('loading');
+});
+</script>

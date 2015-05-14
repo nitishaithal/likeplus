@@ -1,0 +1,65 @@
+    <%= form_for(Picture.new, remote: true)  do |f| %>
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      Upload pictures
+      </div>
+      <div class="modal-body">
+          <!-- <form class="form center-block"> -->
+            <div class="fileupload fileupload-new text-center" data-provides="fileupload">
+              <span class="btn btn-primary btn-file">
+                <span class="fileupload-new">Select a file</span>
+                <span class="form-group upload_form"></span>
+              </span>
+            </div>
+          <!-- </form> -->
+            <div class="thumbnails  text-center" >
+            </div>
+            <br>
+            <div class="dis-none-imp">
+                <div class="progress progress-striped active">
+                    <div class="progress-bar progress-bar-success" >
+                       <span class="sr-only"></span>
+                    </div>
+                </div>
+                <br>  
+            </div>
+            
+      </div>
+      <div class="dis-none-imp">
+        <%= f.text_field :pic %>
+        <%= hidden_field_tag 'pic_type', 'post'  %>
+        <%= f.hidden_field :visible,  value: true  %>
+      </div>
+      <div class="modal-footer">
+          <div>
+            <%= f.submit "Ok", class: "btn btn-primary btn-sm disabled", 'aria-hidden'=>"true", id: "picture_submit" %> 
+            <a href='/pictures/new_upload_post_form' data-remote='true' class="btn btn-default btn-sm"  >Cancel</a>
+          </div>  
+      </div>
+    <% end %>
+
+<script>
+$('.upload_form').append($.cloudinary.unsigned_upload_tag("shyhero", 
+  { cloud_name: 'rashi', tags: 'uploads' }, 
+    { multiple: false }
+  ).bind('cloudinarydone', function(e, data) {
+    $('.thumbnails').append($.cloudinary.image(data.result.public_id, 
+      { format: 'jpg', width: 350, height: 200, 
+        crop: 'fill', effect: 'saturation:50' } ));
+    $('#picture_pic').val(data.result.public_id);
+    $('#picture_submit').removeClass("disabled");
+    $('.progress').parent().addClass('dis-none-imp');
+    $('.progress').parent().append('<h3 class="text-center">Upload completed</h3>');
+  }).bind('fileuploadsend', function(e, data) {
+    $('.progress').parent().removeClass('dis-none-imp');
+    $('.fileupload').hide();
+    $('.progress-bar').css('width','7%');
+  }).bind('fileuploadprogress', function(e, data) { 
+    $('.progress-bar').css('width', 
+      Math.round((data.loaded * 100.0) / data.total) + '%'); 
+        if( Math.round((data.loaded * 100.0) / data.total) == 100){
+         // $('.progress').parent().append('<h3 class="text-center">Upload completed</h3>');
+        }
+  }));
+</script>
+

@@ -1,0 +1,119 @@
+ <% loc_cnt_index = 0 %>
+ <% if @locations.count > 0 %>
+ <div >
+  <% @locations.each do |loc| %>
+	<% loc_cnt_index = loc_cnt_index+1 %>
+
+		<%= form_for(loc, remote: true)  do  |f| %>
+			<div id="map_modal_<%= loc.place_id %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			  <div class="modal-dialog">
+			  <div class="modal-content">
+			      <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			       <b>Edit Location</b>
+			      </div>
+			      <div class="modal-body">
+			         <div class="input-group dis-none-imp">
+	                  <div class="col-sm-12">
+	                    <label class="col-sm-2 control-label mt5">Type</label>
+	                    <div class="col-sm-4">
+	                    <%= f.select :place_type, options_for_select([ "Work", "Education", "Home", "Other" ], "#{loc.place_type}") %>
+	                    </div>
+	                    <label class="col-sm-2 control-label mt5 pl0 pr0" title="Currently working / Studying / Residing ">Current place</label>
+	                    <div class="col-sm-4 mt5" >
+	                      <span class=" custom-radio custom-radio-warning mr15">  
+		                      <%= f.radio_button :current_place, true, :checked => true, id: "current_place_yes_#{loc.uuid}" %> 
+	                          <label for="current_place_yes_<%= loc.uuid %>">&nbsp;&nbsp;Yes</label>
+	                      </span>
+	                      <span class=" custom-radio custom-radio-warning mr15"> 
+	    	                  <%= f.radio_button :current_place, false , id: "current_place_no_#{loc.uuid}" %>
+            	              <label for="current_place_no_<%= loc.uuid %>">&nbsp;&nbsp;No</label>  
+	                      </span>
+	                    </div>
+	                  </div>
+	                  <div class="col-sm-12">
+	                    <label class="col-sm-2 control-label mt15">Details</label>
+	                    <div class="col-sm-10">
+	                       <%= f.text_field :details , class: "form-control mt10" %>
+                      		<span class="help-block mb0">Working as / Studying at / other details </span>
+	                    </div>
+	                  </div>
+            		</div>
+	                  <div class="input-group col-sm-12 mb10">
+	                    <label class="col-sm-2 control-label mt15">Name</label>
+	                    <div class="col-sm-10">
+	                      <%= f.text_field :name , class: "form-control mt10", id: "loc_name_#{ loc.uuid }" %>
+	                    </div>
+	                  </div>
+
+			      </div>
+			      <div class="modal-footer">
+			          <div>
+			  	      	<div class="location-footer1">
+				      	<button class="pull-left btn btn-danger location-delete">Delete</button>
+				          <button type="submit" class="btn btn-primary ladda-button mb5 location_edit_submit_btn" data-style="expand-right" ><span class="ladda-label">Save</span><span class="ladda-spinner"></span></button>
+				      	</div>
+				      	<div class="location-footer2 pull-right">
+				      		<a href='/my_locations/<%= loc.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary ladda-button location-delete-yes" data-style="expand-right" >Yes</a>
+				      		<a class="pull-left btn btn-default location-delete-no">No</a>
+				      	</div>
+			      </div>  
+			      </div>
+			  </div>
+			</div>
+			</div>
+			<% end %>	
+
+	<div class="location_div">
+    			<% if current_user == user %>
+		        <a href="#map_modal_<%= loc.place_id %>" class="pull-right" data-toggle="modal" id="a_modal_<%= loc.place_id %>"><i class="ico-pencil icon-silver font-10"></i></a>
+    			<% end %>
+		            <% unless loc.name.nil? %>
+		            <h4 class=" nm font-16"><%= loc.name unless loc.name.nil? %><span class="text-default pull-right font-13 mr10 dis-none-imp"><%= loc.current_place? ? 'currently ' : '' %></span></h4>
+		            <% end %>
+			        <div class="font-13 dis-none-imp" ><%= loc.details %></div> 
+		            <span class="text-default"> <%= loc.address %></span>
+    			<% unless @locations.count == loc_cnt_index %>
+					<hr class="mt10 mb10">
+				<%end%>
+	</div>		
+  <% end %>		   
+
+ </div>
+ <script type="text/javascript">
+/*	$(".location_div").find('a').hide();
+	$(".location_div").hover(function(){
+		$(this).find('a').show();
+	},function(){
+		$(this).find('a').hide();
+	});*/
+		 	$(".location_edit_submit_btn").click(function(){
+			  $(".modal").modal('hide');
+			});
+			
+			$('.location-footer2').hide();
+
+			$(".location-delete").click(function(e){
+				e.preventDefault();
+				$(this).parent().hide('slow');
+				$(this).parent().next().show('slow');
+			});
+			$(".location-delete-yes").click(function(){
+			  $(".modal").modal('hide');
+				$(this).parent().hide('slow');
+				$(this).parent().prev().show('slow');
+			});
+			$(".location-delete-no").click(function(){
+				$(this).parent().hide('slow');
+				$(this).parent().prev().show('slow');
+			});
+ </script>
+ <div class="mb15"></div>
+
+ <% else %>
+	 <% if current_user == user %>
+	 	No places added, please add to find people around it
+	 <% else %>
+	 	No common location
+	 <% end %>
+ <% end %>

@@ -1,0 +1,3 @@
+$("#post_comment_<%= @post.id %>").html("<%= j render partial: 'list' %>");
+$("#comment_count_<%= @post.id %>").html("(<%= @results.count %>)");
+$("#post_comment_form_<%= @post.id %>").html("<%= j render partial: 'form', locals: {post: @post } %>");

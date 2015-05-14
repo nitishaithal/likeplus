@@ -1,0 +1,377 @@
+<% @location_rels = user.places.each_rel{|r| } %>	
+ <% if @location_rels.count > 0 %>
+ <div >
+	<% @work_rel = [] %>	
+	<% @edu_rel = [] %>	
+	<% @home_rel = [] %>	
+	<% @other_rel = [] %>	
+  <% @location_rels.each do |rel| %>
+      <% case "#{rel.place_type}" %>
+		<% when "Work" %>	
+			<% @work_rel << rel %>	
+		<% when "Education" %>
+			<% @edu_rel << rel %>	
+		<% when "Home" %>
+			<% @home_rel << rel %>	
+		<% else %>
+			<% @other_rel << rel %>	
+		<% end %>	
+
+  <% end %>		   
+
+  	<% if @work_rel.count > 0 %>
+		<h4 class="semibold"><i class="ico-office"></i> Work</h4>
+	<% end %>
+	<div class="ml15">
+    <% @work_rel.each do |rel| %>
+    <% loc = rel.end_node %>
+	<div class="location_div">
+    			<hr class="mt15 mb10">
+		        <a href="#map_modal_<%= rel.created_at.to_i %>" class="pull-right" data-toggle="modal" id="a_modal_<%= loc.place_id %>"><i class="ico-pencil icon-silver font-10"></i></a>
+		            <% unless loc.name.nil? %>
+		            <h4 class="semibold nm font-16"><%= loc.name unless loc.name.nil? %><span class="text-default pull-right font-13 mr10"><%= rel.current_place? ? 'currently ' : '' %></span></h4>
+		            <% end %>
+			        <div class="font-15" ><%= rel.details %></div> 
+		            <span class="text-default"> <%= loc.address %></span>
+	</div>		
+	<%= form_for(loc, url: "locations/#{loc.uuid}/", method: :put, remote: true)  do  |f| %>
+			<div id="map_modal_<%= rel.created_at.to_i %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			  <div class="modal-dialog">
+			  <div class="modal-content">
+			      <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			       <b>Edit Location</b>
+			      </div>
+			      <div class="modal-body">
+			                <div class="input-group">
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt5">Type</label>
+                    <div class="col-sm-4">
+                      <%= select_tag "place_type", options_for_select([ "Work", "Education", "Home", "Other" ],  "#{rel.place_type}" ) %>
+                    </div>
+                    <label class="col-sm-2 control-label mt5 pl0 pr0" title="Currently working / Studying / Residing ">Current place</label>
+                    <div class="col-sm-4 mt5" >
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio1_<%= loc.uuid %>" value=true name="current_place" <%= rel.current_place? ? 'checked ' : '' %> />  
+                        <label for="currentlradio1_<%= loc.uuid %>">&nbsp;&nbsp;Yes</label>   
+                      </span>
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio21_<%= loc.uuid %>" value=false name="current_place" <%= rel.current_place? ? '' : 'checked' %> />  
+                        <label for="currentlradio21_<%= loc.uuid %>">&nbsp;&nbsp;No</label>   
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt15">Details</label>
+                    <div class="col-sm-10">
+                      <%= text_field_tag :details , rel.details , class: "form-control mt10" %>
+                      <span class="help-block mb0">Working as / Studying at / other details </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 mb10">
+                    <label class="col-sm-2 control-label mt15">Name</label>
+                    <div class="col-sm-10">
+                      <%= f.text_field :name , class: "form-control mt10", id: "loc_name_#{ loc.uuid }" %>
+                    </div>
+                  </div>
+            </div>
+			      <div class="form-group googlemap">
+			      	<%=  render partial: 'locations/static_map', locals: {loc: loc } %>
+			      </div>
+			      </div>
+			      <div class="modal-footer">
+			          <div>
+			          
+
+			  	      	<div class="location-footer1">
+				      	<button class="pull-left btn btn-danger location-delete">Delete</button>
+				          <button type="submit" class="btn btn-primary ladda-button mb5 location_edit_submit_btn" data-style="expand-right" ><span class="ladda-label">Save</span><span class="ladda-spinner"></span></button>
+				      	</div>
+				      	<div class="location-footer2 pull-right">
+				      		<a href='/locations/<%= loc.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary ladda-button location-delete-yes" data-style="expand-right" >Yes</a>
+				      		<a class="pull-left btn btn-default location-delete-no">No</a>
+				      	</div>
+			      </div>  
+			      </div>
+			  </div>
+			</div>
+			</div>
+			<% end %>        
+    <% end %>
+	</div>		 
+	<% if @edu_rel.count > 0 %>       
+		<h4 class="semibold mt15"><i class="ico-reading"></i> Education</h4>
+	<% end %>
+	<div class="ml15">
+    <% @edu_rel.each do |rel| %>
+    <% loc = rel.end_node %>
+    <div class="location_div">
+    			<hr class="mt15 mb10">
+		        <a href="#map_modal_<%= rel.created_at.to_i %>" class="pull-right" data-toggle="modal" id="a_modal_<%= loc.place_id %>"><i class="ico-pencil icon-silver font-10"></i></a>
+		            <% unless loc.name.nil? %>
+		            <h4 class="semibold nm font-16"><%= loc.name unless loc.name.nil? %><span class="text-default pull-right font-13 mr10"><%= rel.current_place? ? 'currently ' : '' %></span></h4>
+		            <% end %>
+		         <div class=" font-15" ><%= rel.details %></div> 
+		         <span class="text-default"> <%= loc.address %></span>
+	</div>	
+	<%= form_for(loc, url: "locations/#{loc.uuid}/", method: :put, remote: true)  do  |f| %>
+			<div id="map_modal_<%= rel.created_at.to_i %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			  <div class="modal-dialog">
+			  <div class="modal-content">
+			      <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			       <b>Edit Location</b>
+			      </div>
+			      <div class="modal-body">
+			                <div class="input-group">
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt5">Type</label>
+                    <div class="col-sm-4">
+                      <%= select_tag "place_type", options_for_select([ "Work", "Education", "Home", "Other" ],  "#{rel.place_type}" ) %>
+                    </div>
+                    <label class="col-sm-2 control-label mt5 pl0 pr0" title="Currently working / Studying / Residing ">Current place</label>
+                    <div class="col-sm-4 mt5" >
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio1_<%= loc.uuid %>" value=true name="current_place" <%= rel.current_place? ? 'checked ' : '' %> />  
+                        <label for="currentlradio1_<%= loc.uuid %>">&nbsp;&nbsp;Yes</label>   
+                      </span>
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio21_<%= loc.uuid %>" value=false name="current_place" <%= rel.current_place? ? '' : 'checked' %> />  
+                        <label for="currentlradio21_<%= loc.uuid %>">&nbsp;&nbsp;No</label>   
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt15">Details</label>
+                    <div class="col-sm-10">
+                      <%= text_field_tag :details , rel.details , class: "form-control mt10" %>
+                      <span class="help-block mb0">Working as / Studying at / other details </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 mb10">
+                    <label class="col-sm-2 control-label mt15">Name</label>
+                    <div class="col-sm-10">
+                      <%= f.text_field :name , class: "form-control mt10", id: "loc_name_#{ loc.uuid }" %>
+                    </div>
+                  </div>
+            </div>
+			      <div class="form-group googlemap">
+			      	<%=  render partial: 'locations/static_map', locals: {loc: loc } %>
+			      </div>
+			      </div>
+			      <div class="modal-footer">
+			          <div>
+			          
+
+			  	      	<div class="location-footer1">
+				      	<button class="pull-left btn btn-danger location-delete">Delete</button>
+				          <button type="submit" class="btn btn-primary ladda-button mb5 location_edit_submit_btn" data-style="expand-right" ><span class="ladda-label">Save</span><span class="ladda-spinner"></span></button>
+				      	</div>
+				      	<div class="location-footer2 pull-right">
+				      		<a href='/locations/<%= loc.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary ladda-button location-delete-yes" data-style="expand-right" >Yes</a>
+				      		<a class="pull-left btn btn-default location-delete-no">No</a>
+				      	</div>
+			      </div>  
+			      </div>
+			  </div>
+			</div>
+			</div>
+			<% end %>	        
+    <% end %>
+	</div>	
+	<% if @home_rel.count > 0 %>       
+		<h4 class="semibold mt15"><i class="ico-home3"></i> Home</h4>		        
+	<% end %>	        
+	<div class="ml15">
+    <% @home_rel.each do |rel| %>
+    <% loc = rel.end_node %>
+    <div class="location_div">
+    			<hr class="mt15 mb10">
+		        <a href="#map_modal_<%= rel.created_at.to_i %>" class="pull-right" data-toggle="modal" id="a_modal_<%= loc.place_id %>"><i class="ico-pencil icon-silver font-10"></i></a>
+		            <% unless loc.name.nil? %>
+		            <h4 class="semibold nm font-16"><%= loc.name unless loc.name.nil? %><span class="text-default pull-right font-13 mr10"><%= rel.current_place? ? 'currently ' : '' %></span></h4>
+		            <% end %>
+		            <div class=" font-15" ><%= rel.details %></div>
+		        <span class="text-default"> <%= loc.address %></span>
+	</div>	
+	<%= form_for(loc, url: "locations/#{loc.uuid}/", method: :put, remote: true)  do  |f| %>
+			<div id="map_modal_<%= rel.created_at.to_i %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			  <div class="modal-dialog">
+			  <div class="modal-content">
+			      <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			       <b>Edit Location</b>
+			      </div>
+			      <div class="modal-body">
+			                <div class="input-group">
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt5">Type</label>
+                    <div class="col-sm-4">
+                      <%= select_tag "place_type", options_for_select([ "Work", "Education", "Home", "Other" ],  "#{rel.place_type}" ) %>
+                    </div>
+                    <label class="col-sm-2 control-label mt5 pl0 pr0" title="Currently working / Studying / Residing ">Current place</label>
+                    <div class="col-sm-4 mt5" >
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio1_<%= loc.uuid %>" value=true name="current_place" <%= rel.current_place? ? 'checked ' : '' %> />  
+                        <label for="currentlradio1_<%= loc.uuid %>">&nbsp;&nbsp;Yes</label>   
+                      </span>
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio21_<%= loc.uuid %>" value=false name="current_place" <%= rel.current_place? ? '' : 'checked' %> />  
+                        <label for="currentlradio21_<%= loc.uuid %>">&nbsp;&nbsp;No</label>   
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt15">Details</label>
+                    <div class="col-sm-10">
+                      <%= text_field_tag :details , rel.details , class: "form-control mt10" %>
+                      <span class="help-block mb0">Working as / Studying at / other details </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 mb10">
+                    <label class="col-sm-2 control-label mt15">Name</label>
+                    <div class="col-sm-10">
+                      <%= f.text_field :name , class: "form-control mt10", id: "loc_name_#{ loc.uuid }" %>
+                    </div>
+                  </div>
+            </div>
+			      <div class="form-group googlemap">
+			      	<%=  render partial: 'locations/static_map', locals: {loc: loc } %>
+			      </div>
+			      </div>
+			      <div class="modal-footer">
+			          <div>
+			          
+
+			  	      	<div class="location-footer1">
+				      	<button class="pull-left btn btn-danger location-delete">Delete</button>
+				          <button type="submit" class="btn btn-primary ladda-button mb5 location_edit_submit_btn" data-style="expand-right" ><span class="ladda-label">Save</span><span class="ladda-spinner"></span></button>
+				      	</div>
+				      	<div class="location-footer2 pull-right">
+				      		<a href='/locations/<%= loc.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary ladda-button location-delete-yes" data-style="expand-right" >Yes</a>
+				      		<a class="pull-left btn btn-default location-delete-no">No</a>
+				      	</div>
+			      </div>  
+			      </div>
+			  </div>
+			</div>
+			</div>
+			<% end %>	        
+    <% end %>
+	</div>	
+	<% if @other_rel.count > 0 %>       
+		<h4 class="semibold mt15"><i class="ico-library"></i> Other</h4>     
+	<% end %>		        
+	<div class="ml15">
+    <% @other_rel.each do |rel| %>
+    <% loc = rel.end_node %>
+    <div class="location_div">
+    			<hr class="mt15 mb10">
+		        <a href="#map_modal_<%= rel.created_at.to_i %>" class="pull-right" data-toggle="modal" id="a_modal_<%= loc.place_id %>"><i class="ico-pencil icon-silver font-10"></i></a>
+		            <% unless loc.name.nil? %>
+		            <h4 class="semibold nm font-16"><%= loc.name unless loc.name.nil? %><span class="text-default pull-right font-13 mr10"><%= rel.current_place? ? 'currently ' : '' %></span></h4>
+		            <% end %>
+		        <div class=" font-15" ><%= rel.details %></div> 
+		        <span class="text-default"> <%= loc.address %></span>
+	</div>	
+	<%= form_for(loc, url: "locations/#{loc.uuid}/", method: :put, remote: true)  do  |f| %>
+			<div id="map_modal_<%= rel.created_at.to_i %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+			  <div class="modal-dialog">
+			  <div class="modal-content">
+			      <div class="modal-header">
+			          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			       <b>Edit Location</b>
+			      </div>
+			      <div class="modal-body">
+			                <div class="input-group">
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt5">Type</label>
+                    <div class="col-sm-4">
+                      <%= select_tag "place_type", options_for_select([ "Work", "Education", "Home", "Other" ],  "#{rel.place_type}" ) %>
+                    </div>
+                    <label class="col-sm-2 control-label mt5 pl0 pr0" title="Currently working / Studying / Residing ">Current place</label>
+                    <div class="col-sm-4 mt5" >
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio1_<%= loc.uuid %>" value=true name="current_place" <%= rel.current_place? ? 'checked ' : '' %> />  
+                        <label for="currentlradio1_<%= loc.uuid %>">&nbsp;&nbsp;Yes</label>   
+                      </span>
+                      <span class=" custom-radio custom-radio-warning mr15">  
+                        <input type="radio" id="currentlradio21_<%= loc.uuid %>" value=false name="current_place" <%= rel.current_place? ? '' : 'checked' %> />  
+                        <label for="currentlradio21_<%= loc.uuid %>">&nbsp;&nbsp;No</label>   
+                      </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12">
+                    <label class="col-sm-2 control-label mt15">Details</label>
+                    <div class="col-sm-10">
+                      <%= text_field_tag :details , rel.details , class: "form-control mt10" %>
+                      <span class="help-block mb0">Working as / Studying at / other details </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-12 mb10">
+                    <label class="col-sm-2 control-label mt15">Name</label>
+                    <div class="col-sm-10">
+                      <%= f.text_field :name , class: "form-control mt10", id: "loc_name_#{ loc.uuid }" %>
+                    </div>
+                  </div>
+            </div>
+			      <div class="form-group googlemap">
+			      	<%=  render partial: 'locations/static_map', locals: {loc: loc } %>
+			      </div>
+			      </div>
+			      <div class="modal-footer">
+			          <div>
+			          
+
+			  	      	<div class="location-footer1">
+				      	<button class="pull-left btn btn-danger location-delete">Delete</button>
+				          <button type="submit" class="btn btn-primary ladda-button mb5 location_edit_submit_btn" data-style="expand-right" ><span class="ladda-label">Save</span><span class="ladda-spinner"></span></button>
+				      	</div>
+				      	<div class="location-footer2 pull-right">
+				      		<a href='/locations/<%= loc.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary ladda-button location-delete-yes" data-style="expand-right" >Yes</a>
+				      		<a class="pull-left btn btn-default location-delete-no">No</a>
+				      	</div>
+			      </div>  
+			      </div>
+			  </div>
+			</div>
+			</div>
+			<% end %>	        
+    <% end %>
+	</div>		        
+ </div>
+ <script type="text/javascript">
+	$(".location_div").find('a').hide();
+	$(".location_div").hover(function(){
+		$(this).find('a').show();
+	},function(){
+		$(this).find('a').hide();
+	});
+		 	$(".location_edit_submit_btn").click(function(){
+			  $(".modal").modal('hide');
+			  $("body").removeClass('modal-open');
+			});
+			
+			$('.location-footer2').hide();
+
+			$(".location-delete").click(function(e){
+				e.preventDefault();
+				$(this).parent().hide('slow');
+				$(this).parent().next().show('slow');
+			});
+			$(".location-delete-yes").click(function(){
+			  $(".modal").modal('hide');
+			  $("body").removeClass('modal-open');
+				$(this).parent().hide('slow');
+				$(this).parent().prev().show('slow');
+			});
+			$(".location-delete-no").click(function(){
+				$(this).parent().hide('slow');
+				$(this).parent().prev().show('slow');
+			});
+ </script>
+ <div class="mb15"></div>
+
+ <% else %>
+ 	No places added, please add to find people around it
+ <% end %>

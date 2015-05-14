@@ -1,0 +1,258 @@
+		<div class="post_page"><% @results.each do |result| %>
+		<div class="paginate_do">
+					    <% post = result[0]  %>
+					    <% pUser = result[1]  %>
+						 <!-- 1/2 Grid -->
+                            <div class="col-lg-6 np" id="post_<%= post.uuid %>">
+                                <!-- Text/status post -->
+                                <div class="panel">
+                                    <!-- User info -->
+                                    <ul class="list-table pa15">
+                                        <li class="text-left" style="width:60px;">
+                                            <img class="img-circle" src="<%= cloudinary_url( pUser.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>" alt="<%= pUser.name %>" width="50px" height="50px">
+                                        </li>
+                                        <li class="text-left">
+                                            <p class="ellipsis nm"><span class="semibold"><%= pUser.name %></span> wrote</p>
+                                            <p class="text-muted nm"><%= timeago_tag post.updated_at, :nojs => true, :limit => 10.days.ago %></p>
+                                        </li>
+                                        <li class="text-right" style="width:60px;">
+                                            <div class="btn-group">
+                                            <button type="button" class="btn btn-link dropdown-toggle text-default" data-toggle="dropdown"><i class="ico-menu2"></i></button>
+                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                    <!--<li><a href="javascript:void(0);">Report</a></li>
+                                                    <li><a href="javascript:void(0);">Setting</a></li>
+                                                    <li class="divider"></li>-->
+                                                    <li><a href="#post_delete_modal_<%= post.uuid %>" class="text-danger" role="button" data-toggle="modal">Delete post</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <!--/ User info -->
+                                    <hr class="nm"><!-- horizontal line -->
+                                    <div class="panel-body">
+                                        <%= post.content %>
+                                    </div>
+                                    <% if !post.post_type.nil? && post.post_type == 'pic' %>
+                                    <div class="thumbnail thumbnail-album">
+                                        <!-- media -->
+                                        <div class="media">
+                                            <!-- indicator -->
+                                            <div class="indicator"><span class="spinner"></span></div>
+                                            <!--/ indicator -->
+                                            <img data-toggle="unveil" src="<%= cloudinary_url( post.postPictures[0].pic, :width => 350, :height => 350, :crop => :fill) %>" data-src="<%= cloudinary_url( post.postPictures[0].pic, :width => 350, :height => 200, :crop => :fill) %>" alt="Cover" width="100%" class="unveiled">
+                                        </div>
+                                        <!--/ media -->
+                                    </div>
+                                    <% end %>
+                                    <% if !post.post_type.nil? && post.post_type == 'location' %>
+                                    <div class="thumbnail thumbnail-album">
+                                        <!-- media -->
+                                        <div class="media">
+                                            <!-- indicator -->
+                                            <div class="indicator"><span class="spinner"></span></div>
+                                            <!--/ indicator -->
+                                            <img data-toggle="unveil" src="https://maps.googleapis.com/maps/api/staticmap?center=<%= post.post_location.latitude %>,<%= post.post_location.longitude  %>&zoom=15&size=350x350&maptype=roadmap&sensor=true&markers=color:red|<%= url_encode(post.post_location.address) %>" data-src="https://maps.googleapis.com/maps/api/staticmap?center=<%= post.post_location.latitude %>,<%= post.post_location.longitude  %>&zoom=15&size=560x300&maptype=roadmap&sensor=true&markers=color:red|<%= url_encode(post.post_location.address) %>" alt="<%= post.post_location.name unless post.post_location.name.nil? %>" width="100%" class="unveiled">
+                                        </div>
+                                        <!--/ media -->
+                                    </div>
+                                    <% end %>
+                                    <% 	@badges = Neo4j::Session.query.match("(post { uuid: '#{post.uuid}' })-[:postBadges*..]->(myBadge)").pluck('DISTINCT myBadge.badgeType, count(myBadge.badgeType)') %>
+                                    <% if @badges.count > 0 %>
+                                    <div id="post_badge_<%= post.uuid %>">
+                                      <hr class="nm"><!-- horizontal line -->
+                                      <div class="panel-toolbar-wrapper mt5 mb5 pl5 pr5">
+                                          <div class="panel-toolbar">
+                                            <% @badges.each do |b| %>
+                                                                     
+                                                <a href="/posts/<%= post.uuid %>/badges?badgeType=<%= b[0] %>" class="btn btn-warning icon-ubuntu btn-outline btn-ubuntu-outline mb5 mr5 btn-sm" data-remote="true"><%= "#{b[0]} - #{b[1]}"  %></a>
+                                           
+                                                <div id="badge_<%= post.uuid %>_badgeType_<%= b[0] %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header text-center">
+                                                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                                                <div class="mt15 div-modal-logo" style="font-size:36px;">
+                                                                  
+                                                                  <% case "#{b[0]}" %>
+                                                                  <% when "BFF" %>
+                                                                      <i class="flaticon-males4 icon-font-55"></i>
+                                                                  <% when "Down-to-earth" %>
+                                                                      <i class="flaticon-global22 icon-font-55"></i>
+                                                                  <% when "Emotional" %>
+                                                                      <i class="flaticon-teardrop4 icon-font-55"></i>
+                                                                  <% when "Enterprising" %>
+                                                                      <i class="flaticon-businessmen19 icon-font-55"></i>
+                                                                  <% when "Enthusiastic" %>
+                                                                      <i class="flaticon-jumping2 icon-font-55"></i>
+                                                                  <% when "Extravert" %>
+                                                                      <i class="flaticon-amount icon-font-55"></i>
+                                                                  <% when "Guardian" %>
+                                                                      <i class="flaticon-palace icon-font-55"></i>
+                                                                  <% when "Handsome prince / Beautiful princess" %>
+                                                                      	
+                                                                      <% if pUser.gender == 'male'  %>
+                                                                      	<i class="flaticon-boy17 icon-font-55"></i>
+                                                                      <% else  %>
+                                                                      	
+                                                                      	<i class="flaticon-female172 icon-font-55"></i>
+                                                                      <% end  %>
+                                                                  <% when "Hilarious" %>
+                                                                      <i class="flaticon-clown4 icon-font-55"></i>
+                                                                  <% when "Idealistic" %>
+                                                                      <i class="flaticon-frontal8 icon-font-55"></i>
+                                                                  <% when "Innovative" %>
+                                                                      <i class="flaticon-thought icon-font-55"></i>
+                                                                  <% when "Introvert" %>
+                                                                      <i class="flaticon-person128 icon-font-55"></i>
+                                                                  <% when "Leader" %>
+                                                                      <i class="flaticon-leader icon-font-55"></i>
+                                                                  <% when "Open-minded" %>
+                                                                      <i class="flaticon-person148 icon-font-55"></i>
+                                                                  <% when "Persevering" %>
+                                                                      <i class="flaticon-computer153 icon-font-55"></i>
+                                                                  <% when "Reliable" %>
+                                                                      <i class="flaticon-help20 icon-font-55"></i>
+                                                                  <% when "Responsible" %>
+                                                                      <i class="flaticon-face3 icon-font-55"></i>
+                                                                  <% when "Romantic" %>
+                                                                      <i class="flaticon-male22 icon-font-55"></i>
+                                                                  <% when "Sensitive" %>
+                                                                      <i class="flaticon-girl37 icon-font-55"></i>
+                                                                  <% when "Sociable" %>
+                                                                      <i class="flaticon-persons icon-font-55"></i>
+                                                                  <% when "Spiritual" %>
+                                                                      <i class="flaticon-floating1 icon-font-55"></i>
+                                                                  <% when "Witty" %>
+                                                                      <i class="flaticon-winking8 icon-font-55"></i>
+                                                                  <% when "Workaholic" %>
+                                                                      <i class="flaticon-man332 icon-font-55"></i>
+                                                                  <% when "Macho" %>
+                                                                      <i class="flaticon-bicep icon-font-55"></i>
+                                                                  <% when "Hot" %>
+                                                                      <i class="ico-fire22 icon-font-55"></i>
+                                                                  <% when "Happy-go-lucky" %>
+                                                                     <i class="flaticon-rest icon-font-55"></i>
+                                                                  <% else %>
+                                                                      <i class="flaticon-shiny icon-font-55"></i>
+                                                                  <% end %>
+                                                                  
+                                                                </div>
+                                                                <h3 class="semibold modal-title text-success div-modal-text"><%= b[0] %></h3>
+                                                                <p class="text-muted"></p>
+                                                            </div>
+                                                            <div class="modal-body" id="badge_<%= post.uuid %>_badgeType_<%= b[0] %>_list">
+                                                                  <div class="indicator inline"><span class="spinner"></span></div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div>
+                                  
+                                            <% end %>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    
+                                    
+                                    <% end %>
+                                    <% 	@results = Neo4j::Session.query.match("(post { uuid: '#{post.uuid}' })-[:postComment*..]->(comment),(comment)<-[:userComment]-(user)").where(" NOT ( comment.status = 'delete') or (comment.status is null)").order("comment.created_at DESC").pluck(:comment, :user) %>
+                                    <!-- Toolbar -->
+                                    <div class="panel-toolbar-wrapper">
+                                        <div class="panel-toolbar">
+                                            <a href="/comments/<%= post.uuid %>/more?pUser_id=<%= pUser.id %>" class="semibold text-default" data-remote="true">Comments
+                                            <% if @results.count > 0 %>
+                                               <span id="comment_count_<%= post.uuid %>">(<%= @results.count %>)</span>
+                                            <% end %>
+                                            </a>
+                                            <span class="text-muted mr5 ml5">&#8226;</span>
+                                            <a href="#badge_modal" class="semibold text-default tag_link" id="tag_link_<%= post.uuid %>" role="button" data-toggle="modal"  >Badge</a>
+                                            <!--<span class="text-muted mr5 ml5">&#8226;</span>
+                                            <a href="javascript:void(0);" class="semibold text-default">Share</a>-->
+                                        </div>
+                                    </div>
+                                    <div id="post_comment_form_<%= post.id %>">
+                                      <!-- Comment box -->
+                                      <%= form_for [post, Comment.new ], remote: true do |f| %>
+                                      <%= f.text_field :content , class: "form-control form-control-minimal ht50", placeholder: "Write your comment" %>
+                                      <%= hidden_field_tag 'pUser_id', pUser.id  %>
+                                      <%= f.submit "", class: "hide" %>
+                                      <% end %>
+                                      <!--/ Comment box -->
+                                    <hr class="nm"> <!-- horizontal line -->
+                                    </div>
+                                    <!--/ Toolbar -->
+                                    <div id="post_comment_<%= post.id %>" class="post_comments">
+                                    <% if @results.count > 0 %>
+                                    <div class="panel-body slimscroll1 np">
+                                        <!-- Comment list -->
+                                        <ul class="media-list mb0">
+                                        
+                                            <% @results.first(3).each do |result| %>
+                                        
+                                      
+                                            <% comment = result[0]%>
+                                            <% user = result[1]%>
+                                                    <li class="media border-dotted mt0">
+                                                        <a href="javascript:void(0);" class="pull-left">
+                                                            <img class="img-circle media-object" src="<%= cloudinary_url( user.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>" alt="<%= user.name %>" width="50px" height="50px">
+                                                        </a>
+                                                        <div class="media-body">
+                                                             <% if(current_user?(user) || current_user?(pUser)) %>
+                                                              <a class="pull-right" href="#comment_modal_del_<%= comment.id %>"  role="button" data-toggle="modal" >×</a>
+                                                            <% end %>
+                                                            <p class="media-heading"><%= comment.userComment.name %></p>
+                                                            <p class="media-text"><%= comment.content %></p>
+                                                            <!-- meta icon -->
+                                                            <p class="media-meta pull-right"><%= timeago_tag comment.created_at, :nojs => true, :limit => 10.days.ago %></p>
+                                                            <!--/ meta icon -->
+                                                        </div>
+                                                    </li>
+                                                  <div id="comment_modal_del_<%= comment.id %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                    <div class="modal-content">
+                                                       <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                        <b>Are you sure?</b>
+                                                        </div>
+                                                        <div class="modal-footer bt0">
+                                              	      		<a href='/comments/<%= comment.uuid %>' data-method="delete" data-remote='true' class="btn btn-primary" data-dismiss="modal" aria-hidden="true" >Yes</a>
+                                              	      		<a class="btn btn-default"  data-dismiss="modal" aria-hidden="true" >No</a>
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                  </div>
+                                            <% end %>
+                                        </ul>
+                                        <!--/ Comment list -->
+                                    </div>
+                                    <% end %>
+                                    </div>
+                                </div>
+                                <!--/ Text/status post -->
+                            </div>
+                            <!--/ 1/2 Grid -->
+                            
+                            <div id="post_delete_modal_<%= post.uuid %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                              <div class="modal-dialog">
+                              <div class="modal-content">
+                                 <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                  <b>Are you sure?</b>
+                                  </div>
+                                  <div class="modal-footer">
+                        	      		<a href='/posts/<%= post.uuid %>' data-method="delete" data-remote='true' class="btn btn-primary badge_delete_yes" data-dismiss="modal" aria-hidden="true" >Yes</a>
+                        	      		<a class="btn btn-default badge_delete_no"  data-dismiss="modal" aria-hidden="true" >No</a>
+                                  </div>
+                              </div>
+                            </div>
+                            </div>
+                            
+                            <script>
+                              $("#tag_link_<%= post.uuid %>").on( "click", function(){
+                               $("#tag_post_id").html('<%= hidden_field_tag "post_id", "#{post.uuid}"  %>');
+                              });
+                            </script>
+                    </div>
+                <% end %></div>

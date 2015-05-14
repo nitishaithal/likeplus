@@ -1,0 +1,3 @@
+$('#post_address_modal').modal('hide');
+$('#post_type').html("<%= j render partial: 'locations/post_type' %>");
+$('#post_pic_preview').html("<%= j render partial: 'locations/static_map', locals: {loc: @myLocation } %>");

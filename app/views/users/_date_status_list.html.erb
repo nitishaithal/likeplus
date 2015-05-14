@@ -1,0 +1,26 @@
+ <!-- tab -->
+ <ul class="nav nav-tabs nav-justified">
+    <li class="active"><a href="#date_req_received" data-toggle="tab">Received</a></li>
+    <li ><a href="#date_req_sent" data-toggle="tab">Sent</a></li>
+    <li><a href="#date_req_interested" data-toggle="tab">Interested</a></li>
+</ul>
+<!--/ tab -->
+<!-- tab content -->
+<div class="tab-content panel panel-ovrd-bottom-trnp mb0 " >
+    <div class="tab-pane active pb0 pt0 pl0 pr0" id="date_req_received">
+        <ul class="list-table">
+            <%= render partial: 'users/users_list', locals: {users_list: date_received } %>                        
+        </ul>    
+    </div>
+    <div class="tab-pane pb0 pt0 pl0 pr0" id="date_req_sent">
+        <ul class="list-table">
+            <%= render partial: 'users/users_list', locals: {users_list: date_sent } %>                        
+        </ul>   
+    </div>
+    <div class="tab-pane pb0 pt0 pl0 pr0" id="date_req_interested">
+        <ul class="list-table">
+            <%= render partial: 'users/users_list', locals: {users_list: date_interested } %>                        
+        </ul>
+    </div>
+</div>
+                        <!--/ tab content -->

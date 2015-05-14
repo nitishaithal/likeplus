@@ -1,0 +1,176 @@
+<!--<h4 class="mb0">Badges</h4>
+<hr>-->
+<% unless @badges.blank? %>
+
+    <% badge_cnt = 0 %>
+    <% @badges.each do |badge| %>
+        <% if 0 == badge_cnt % 3 %>
+            <ul class="nav nav-section nav-justified ">
+        <% end %>
+            <% badge_cnt = badge_cnt + 1 %>
+                <li class="li_link">
+                    <div class="section">
+                    <% case "#{badge[0]}" %>
+                    <% when "BFF" %>
+                        <h1><i class="flaticon-males4"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Down-to-earth" %>
+                        <h1><i class="flaticon-global22"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Emotional" %>
+                        <h1><i class="flaticon-teardrop4"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Enterprising" %>
+                        <h1><i class="flaticon-businessmen19"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Enthusiastic" %>
+                        <h1><i class="flaticon-jumping2"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Extravert" %>
+                        <h1><i class="flaticon-amount"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Guardian" %>
+                        <h1><i class="flaticon-palace"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Handsome prince / Beautiful princess" %>
+                        <% if session['user_gender'] == 'male'  %>
+                        <h1><i class="flaticon-boy17"></i></h1>
+                        <span class="text-grey">Handsome prince</span>
+                        <% else  %>
+                        <h1><i class="flaticon-female172"></i></h1>
+                        <span class="text-grey">Beautiful princess</span>
+                        <% end  %>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Hilarious" %>
+                        <h1><i class="flaticon-clown4"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Idealistic" %>
+                        <h1><i class="flaticon-frontal8"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Innovative" %>
+                        <h1><i class="flaticon-thought"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Introvert" %>
+                        <h1><i class="flaticon-person128"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Leader" %>
+                        <h1><i class="flaticon-leader"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Open-minded" %>
+                        <h1><i class="flaticon-person148"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Persevering" %>
+                        <h1><i class="flaticon-computer153"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Reliable" %>
+                        <h1><i class="flaticon-help20"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Responsible" %>
+                        <h1><i class="flaticon-face3"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Romantic" %>
+                        <h1><i class="flaticon-male22"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Sensitive" %>
+                        <h1><i class="flaticon-girl37"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Sociable" %>
+                        <h1><i class="flaticon-persons"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Spiritual" %>
+                        <h1><i class="flaticon-floating1"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Witty" %>
+                        <h1><i class="flaticon-winking8"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Workaholic" %>
+                        <h1><i class="flaticon-man332"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Macho" %>
+                        <h1><i class="flaticon-bicep"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Hot" %>
+                        <h1><i class="ico-fire22"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% when "Happy-go-lucky" %>
+                        <h1><i class="flaticon-rest"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% else %>
+                        <h1><i class="flaticon-shiny"></i></h1>
+                        <span class="text-grey"><%= badge[0] %></span>
+                        <h4 class="nm"><%= badge[1] %></h4>
+                    <% end %>
+                    </div>
+                </li>
+        <% if 0 == badge_cnt % 3 %>
+            </ul>
+           <br>
+        <% end %>
+    <% end %>
+        <% if 0 != badge_cnt % 3 %>
+            </ul>
+            <span class="mt10"></span>
+        <% end %>
+
+                <div id="badge-modal-sm" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header text-center">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <div class="mt15 div-modal-logo" style="font-size:36px;"> </div>
+                                <h3 class="semibold modal-title text-success div-modal-text"></h3>
+                                <p class="text-muted"></p>
+                            </div>
+                            <div class="modal-body badge-list">
+                                  <div class="indicator inline"><span class="spinner"></span></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div>
+
+<script type="text/javascript">
+    $(".li_link").click(function(){
+        $("#badge-modal-sm").modal('show');
+        $(".div-modal-logo").html($(this).find('h1').html());
+        $(".div-modal-text").html($(this).find('span').html());
+        var str = encodeURIComponent($(this).find('span').text());
+        if(str == 'Beautiful%20princess' || str == 'Handsome%20prince' ){
+            str = "Handsome%20prince%20/%20Beautiful%20princess"
+        }
+        $(".badge-list").html("<div class='indicator inline'><span class='spinner'></span></div>");
+        $(".badge-list").load("/my_badges/badge_list?type=" + str);
+    });
+</script>
+
+
+<% else %>
+<span class="mt10 mb10"> No badges </span>
+<% end %>

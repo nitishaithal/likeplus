@@ -1,0 +1,4 @@
+$("#interests_block").html("<%= j render partial: 'interests/interest' %>");
+$("form#new_interest")[0].reset();
+$("#interest_submit_btn").removeClass("disabled");
+$("#interest_modal").modal('hide');

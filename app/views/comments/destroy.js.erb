@@ -1,0 +1,2 @@
+$("#post_comment_<%= @post.id %>").html("<%= j render partial: 'list' %>");
+$("#comment_count_<%= @post.id %>").html("(<%= @results.count %>)");

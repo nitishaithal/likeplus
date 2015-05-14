@@ -1,0 +1,62 @@
+<div class="row">
+	<div class="col-md-12">
+		<!-- START Timeline -->
+		<ul class="timeline">
+                            <li class="header mt15">
+                                <!-- Post form -->
+                                <%= form_for(Post.new, remote: true)  do  |f| %>
+                                <div class="panel">
+                                	<%= f.text_area :content,  rows: 2, class: 'form-control form-control-minimal', placeholder: 'Write post...'  %>
+                                    <div class="panel-footer">
+                                        <div class="panel-toolbar-wrapper">
+                                            <div class="panel-toolbar">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-default"><i class="ico-camera3"></i></button>
+                                                    <button type="button" class="btn btn-default"><i class="ico-location"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="panel-toolbar text-right">
+                                                <button type="submit" class="btn btn-primary">Post</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% end %>
+                                <!--/ Post form -->
+                            </li>
+			<li class="header year ellipsis">Now</li>
+			<li class="wrapper">
+				<!-- START Events -->
+				<ul class="events">
+					<% @results.each do |result| %>
+						<% case result[1] %>
+						<% when Like %>
+							<%= render partial: "timeline/likes", :locals => {:result => result} %>
+						<% when GetBadge %>
+							<%= render partial: "timeline/badge", :locals => {:result => result} %>
+						<% when MyPicture %>
+							<% if result[2].visible %>
+							<%= render partial: "timeline/add_pic", :locals => {:result => result} %>
+							<% end %>
+						<% when Place %>
+							<%= render partial: "timeline/added_to_place", :locals => {:result => result} %>
+						<% when Add_status %>
+							<%= render partial: "timeline/status", :locals => {:result => result} %>
+						<% when Like_testimonial %>
+							<%= render partial: "timeline/testimonial", :locals => {:result => result} %>
+						<% else %>
+							<!-- <p> Didn't work - <%= result[1].class %> </p> -->
+						<% end %>
+					<% end %>
+				</ul>
+				<!--/ END Events -->
+			</li>
+			<li class="header text-center semibold nm"><a href="javascript:void(0);">Load more</a></li>
+		</ul>
+		<!--/ END Timeline -->
+	</div>
+</div>
+<script>
+  $("#li_timeline").addClass("active");
+//  $("#minimize_sidebar_a").click();
+</script>

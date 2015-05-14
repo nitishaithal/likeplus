@@ -1,0 +1,62 @@
+
+<!--MyBadge modal-->
+<%= form_for(MyBadge.new , remote: true)  do |f| %>
+<div id="badge_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+      <h5 class="semibold mt0 mb0">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      Give Personality Badge</h5>
+      </div>
+      <div class="modal-body">
+          <!-- <form class="form center-block"> -->
+          <%= hidden_field_tag "user_id", "#{@user.uuid}"  %>
+          <div class="form-group">
+            <div class="panel">
+              <div class="panel-body">
+                  <div class="btn-tag">
+                    <% Badge.all.each do |k| %>
+                            <a href="javascript:void(0);" class="btn btn btn-warning icon-ubuntu btn-outline btn-ubuntu-outline mb5 btn-sm badge-btn"><%= "#{k.badgeType}"  %></a>
+                             
+                     <% end %>
+                    </div>
+                  <div class="input-group">
+                    <label class="col-sm-3 control-label mt10">Type</label>
+                    <div class="col-sm-9">
+                      <%= f.text_field 'badgeType', class: "form-control mt10", readonly: true, id: "new_badgeType" %>
+                    </div>
+                    <label class="col-sm-12 control-label">Comment</label>
+                    <div class="col-sm-12">
+                      <%= f.text_area 'comment' , class: "form-control mt10" %>
+                    </div>
+                  </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- </form> -->
+      </div>
+      <div class="modal-footer">
+          <div id="badge_submit_div" class="dis-none-imp" >
+          <button type="submit" class="btn btn-primary ladda-button mb5" data-style="expand-right" id="badge_submit_btn"><span class="ladda-label">Submit</span><span class="ladda-spinner"></span></button>
+          
+          </div>  
+      </div>
+  </div>
+</div>
+</div>
+<% end %>
+
+<script>
+$(".badge-btn").click(function(){
+  $(this).parent().children('a').removeClass("btn-ubuntu-outline");
+  $(this).parent().children('a').removeClass("btn-ubuntu");
+  $(this).parent().children('a').addClass("btn-ubuntu-outline");
+  $(this).removeClass("btn-ubuntu-outline");
+  $(this).addClass("btn-ubuntu");
+  $("#new_badgeType").val($(this).text());
+  $("#badge_submit_div").removeClass('dis-none-imp');
+});
+
+</script>

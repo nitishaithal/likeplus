@@ -1,0 +1,25 @@
+                                    <div class="panel-body slimscroll np">
+                                        <!-- Comment list -->
+                                        <ul class="media-list">
+                                            <% @results.first(3).each do |result| %>
+                                            <% comment = result[0]%>
+                                            <% user = result[1]%>
+                                                    <li class="media border-dotted">
+                                                        <a href="javascript:void(0);" class="pull-left">
+                                                            <img class="img-circle media-object" src="<%= cloudinary_url( user.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>" alt="<%= user.name %>" width="50px" height="50px">
+                                                        </a>
+                                                        <div class="media-body">
+                                                             <% if(current_user?(user) || current_user?(@pUser)) %>
+                                                              <a class="pull-right" href="#comment_modal_del_<%= comment.id %>"  role="button" data-toggle="modal" >×</a>
+                                                            <% end %>
+                                                            <p class="media-heading"><%= user.name %></p>
+                                                            <p class="media-text"><%= comment.content %></p>
+                                                            <!-- meta icon -->
+                                                            <p class="media-meta pull-right"><%= timeago_tag comment.created_at, :nojs => true, :limit => 10.days.ago %></p>
+                                                            <!--/ meta icon -->
+                                                        </div>
+                                                    </li>
+                                            <% end %>
+                                        </ul>
+                                        <!--/ Comment list -->
+                                    </div>

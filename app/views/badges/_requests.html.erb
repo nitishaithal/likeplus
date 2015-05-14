@@ -1,0 +1,177 @@
+<% unless @req_badges.blank? %>
+<% if @req_badges.count > 0 %>
+<h5 class="mb0 text-success">Response pending</h5>
+<% end %>
+<% @req_badges.each do |badge| %>
+<div class="badge_div %>">	
+<hr>
+<ul class="list-table">
+	<li style="width:50px;" >
+		<a href="#" title=" <%= badge.giveBadges.name %>">
+		<img class="img-circle img-bordered-success" src='<%= cloudinary_url( badge.giveBadges.default_pic, :width => 50, :height => 50, :crop => :fill, :gravity => :faces) %>' alt="<%= badge.giveBadges.name %>" width="50px" height="50px" >
+		</a>
+	</li>
+	<li class="text-left">
+		<% case "#{badge.badgeType}" %>
+		<% when "BFF" %>
+				<h4 class="nm ml10"><i class="flaticon-males4 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Down-to-earth" %>
+				<h4 class="nm ml10"><i class="flaticon-global22 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Emotional" %>
+				<h4 class="nm ml10"><i class="flaticon-teardrop4 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Enterprising" %>
+				<h4 class="nm ml10"><i class="flaticon-businessmen19 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Enthusiastic" %>
+				<h4 class="nm ml10"><i class="flaticon-jumping2 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Extravert" %>
+				<h4 class="nm ml10"><i class="flaticon-amount icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Guardian" %>
+				<h4 class="nm ml10"><i class="flaticon-palace icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Handsome prince / Beautiful princess" %>
+				<% if badge.getBadges.gender == 'male'  %>
+				<h4 class="semibold nm ml10"><i class="flaticon-boy17 icon-font-30"></i>
+				Handsome prince
+				<% else  %>
+				<h4 class="semibold nm ml10"><i class="flaticon-female172 icon-font-30"></i>
+				Beautiful princess
+				<% end  %>
+				</h4>
+		<% when "Hilarious" %>
+				<h4 class="nm ml10"><i class="flaticon-clown4 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Idealistic" %>
+				<h4 class="nm ml10"><i class="flaticon-frontal8 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Innovative" %>
+				<h4 class="nm ml10"><i class="flaticon-thought icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Introvert" %>
+				<h4 class="nm ml10"><i class="flaticon-person128 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Leader" %>
+				<h4 class="nm ml10"><i class="flaticon-leader icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Open-minded" %>
+				<h4 class="nm ml10"><i class="flaticon-person148 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Persevering" %>
+				<h4 class="nm ml10"><i class="flaticon-computer153 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Reliable" %>
+				<h4 class="nm ml10"><i class="flaticon-help20 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Responsible" %>
+				<h4 class="nm ml10"><i class="flaticon-face3 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Romantic" %>
+				<h4 class="nm ml10"><i class="flaticon-male22 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Sensitive" %>
+				<h4 class="nm ml10"><i class="flaticon-girl37 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Sociable" %>
+				<h4 class="nm ml10"><i class="flaticon-persons icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Spiritual" %>
+				<h4 class="nm ml10"><i class="flaticon-floating1 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Witty" %>
+				<h4 class="nm ml10"><i class="flaticon-winking8 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Workaholic" %>
+				<h4 class="nm ml10"><i class="flaticon-man332 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Macho" %>
+				<h4 class="nm ml10"><i class="flaticon-bicep icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Hot" %>
+				<h4 class="nm ml10"><i class="icon-fire22 icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% when "Happy-go-lucky" %>
+				<h4 class="nm ml10"><i class="flaticon-rest icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% else %>
+				<h4 class="nm ml10"><i class="flaticon-shiny icon-font-30"></i>
+				<span class="semibold"><%= badge.badgeType %></span>
+				</h4>
+		<% end %>
+		<p class="text-muted nm ml10"> <%= badge.comment %></p>
+	</li>
+	<% if current_user == @user %>
+	<li class="text-right width-50"><a href="/my_badges/<%= badge.uuid %>/like" class="btn btn-sm btn-success badge_like_btn" data-remote='true'>Like</a></li>
+	<% end %>
+	<li class="text-right width-20 valign-top">
+		<a href='#badge_delete_modal_<%= badge.uuid %>' role="button" data-toggle="modal" >
+			<i class="ico-remove icon-silver"></i>
+		</a>
+	</li>
+</ul>
+<!--Badge confirm modal-->
+	<div id="badge_delete_modal_<%= badge.uuid %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	  <div class="modal-content">
+	      <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	          <br>
+	      </div>
+	      <div class="modal-body">
+	      <h4 class="text-center semibold "> Are you sure? </h4>
+	      </div>
+	      <div class="modal-footer">
+	      	<div class=" pull-right">
+	      		<a href='/my_badges/<%= badge.uuid %>' data-method="delete" data-remote='true' class="pull-left btn btn-primary badge_delete_yes" data-dismiss="modal" aria-hidden="true" >Yes</a>
+	      		<a class="pull-left btn btn-default" data-dismiss="modal" aria-hidden="true">No</a>
+	      	</div>
+	      </div>
+	  </div>
+	</div>
+	</div>
+<!--Badge confirm modal-->
+
+</div>
+
+<% end %>
+
+<script>
+$(".badge_like_btn").click(function(){
+	$(this).closest('div').remove();
+});
+	$(".badge_delete_yes").click(function(){
+		$(this).closest('.badge_div').hide();
+	});
+
+</script>
+<br>
+<% end %>

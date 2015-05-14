@@ -1,0 +1,11 @@
+development:
+  server: "http://localhost:3003/faye"
+  secret_token: "secret"
+test:
+  server: "http://localhost:3003/faye"
+  secret_token: "secret"
+production:
+  #server: "http://example.com/faye"
+  server: "https://chattyboy.herokuapp.com/faye"
+  secret_token: "4b69dbae9ded3d3a888bd9fb145be1fca7ed88a7cb4ad71b84a940046a0c4ab1"
+  signature_expiration: 86400 # one day

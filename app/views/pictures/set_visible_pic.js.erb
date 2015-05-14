@@ -1,0 +1,7 @@
+$('.images_div').html("<%= j render partial: 'pictures/pics_grid' %>");
+$("[data-toggle~=unveil]").unveil(200, function () {
+	$(this).load(function () {
+		$(this).addClass("unveiled");
+	});
+});
+
