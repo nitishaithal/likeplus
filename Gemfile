@@ -95,6 +95,7 @@ end
 gem 'heroku_rails_deflate', :group => :production
 #gem 'heroku-deflater', :group => :production
 gem 'rabl'
+gem 'redis', '3.1.0'
 group :development do
   gem 'spring'
   gem 'os'

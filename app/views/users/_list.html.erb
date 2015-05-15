@@ -7,7 +7,8 @@
           <!-- START Widget Panel -->
           <div class="widget panel">
             <!-- panel ribbon -->
-            <a href="/users/<%= friend.uuid %>/" class="panel-ribbon panel-ribbon-primary"><i class="ico-info"></i></a>
+            <a href="/users/<%= friend.uuid %>/" class="panel-ribbon panel-ribbon-primary"><i class="ico-info"></i></a><br/>
+            
             <!--/ panel ribbon -->
             <!-- panel ribbon -->
             <% @like = current_user.rels(dir: :outgoing, type: :likes, between: friend).blank? ? true : false %>
@@ -110,7 +111,7 @@
           <!--/ END Widget Panel -->
           <!--/row-->
         </div>
-
+<%=link_to "chat", controller: 'conversations', action: 'start_conversation', :id => friend.uuid %>
 
         <script type="text/javascript">
 

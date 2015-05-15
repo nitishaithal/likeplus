@@ -348,6 +348,7 @@ DEPENDENCIES
   rails-timeago
   rails4-autocomplete
   rails_12factor
+  redis (= 3.1.0)
   sass-rails (~> 4.0.3)
   sdoc
   sidekiq
