@@ -1,0 +1,2 @@
+object @friends
+attributes  :@friends

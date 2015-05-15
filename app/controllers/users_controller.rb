@@ -270,6 +270,10 @@ before_filter :signed_in_user, except: :login
   def like_list
     @friends = []
     @friends = current_user.likes.limit(2)
+    respond_to do |format|
+      format.html
+      format.json { render json: @friends }
+    end
   end
 
   def page_like_list
