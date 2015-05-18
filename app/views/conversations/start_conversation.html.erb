@@ -1,2 +1,84 @@
-<h1>Chat#start_conversation</h1>
-<p>Find me in app/views/chat/start_conversation.html.erb</p>
+<!doctype html>
+<html>
+<head>
+	
+
+	<script src="https://cdn.pubnub.com/pubnub-3.7.1.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+          <style>
+ #header-content {
+    position: absolute;
+    bottom: 5%;
+    left: 0%;
+  }
+
+</style>
+</head>
+<body>
+	<h1><%=@key%></h1>
+<h5 align = 'center'> </h5>
+<hr/>
+<!--	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	-->
+	<div id="chatHistory" class="table-bordered chatHistory">
+
+	</div>
+	<div id="header-content">
+   	 <hr/>
+		<%= form_tag("/conversations/", id: "chat_form", remote: true) do %>
+			
+			<%= hidden_field_tag 'key', @key %>
+			<%= text_field_tag 'message' %>
+    		<%= submit_tag "message", id: "sendButton" %>
+    	 	
+    		
+		<% end %>
+
+
+		
+
+	</div>
+
+<script>
+			(function() 
+			{ 
+			var publish_key = 'pub-c-39594782-c4b0-4fb3-80fe-74e262353bf6';
+			var subscribe_key = 'sub-c-7ae61028-e9dd-11e3-92e7-02ee2ddab7fe';
+			channel = "<%= @key %>";
+				//channel = "key";
+			var username = 'sharat';//window.location.search.substring(1).split('=')[1];
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			pubnub =PUBNUB.init({
+				publish_key : publish_key,
+				subscribe_key : subscribe_key,
+				uuid : "sharat"
+			});
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			pubnub.subscribe({
+				channel : channel,
+				callback : function(message) { 
+				//	alert(message);
+					$('#chatHistory')[0].innerHTML = message + '<br/>' + $('#chatHistory')[0].innerHTML; 
+				}
+			
+			});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		/*	pubnub.bind('click', pubnub.$('sendButton'), function(e) { */
+				
+	
+				$("#chat_form").submit(function(){
+					pubnub.publish({
+						channel : channel, 
+						message : $('#message').val()
+					
+					});
+					
+				});
+				
+		/*	});*/
+		})();
+</script>
+
+
+</body>
+</html>

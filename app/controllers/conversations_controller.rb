@@ -19,7 +19,7 @@ class ConversationsController < ApplicationController
       @messages = []
     end
 
-    render template: "users/chat"
+    #render partial: "users/chat"
 
   end
 
