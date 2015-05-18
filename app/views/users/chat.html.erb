@@ -24,7 +24,7 @@
 	</div>
 	<div id="header-content">
    	 <hr/>
-		<%= form_tag("/chats/", method: "post", id: "chat_form", remote: true) do %>
+		<%= form_tag("/conversations/", method: "post", id: "chat_form", remote: true) do %>
 			
 			<%= hidden_field_tag 'key', @key %>
 			<%= text_field_tag 'message' %>

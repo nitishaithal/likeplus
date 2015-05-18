@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "static_pages/help"
 
   get '/signout', to: 'sessions#destroy'
-
+  
   get '/auth/:provider/callback' => 'users#login'
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
@@ -68,7 +68,7 @@ Rails.application.routes.draw do
 resources :conversations do
     collection do
       get 'start_conversation'
-    end
+    end 
   end
 
   # The priority is based upon order of creation: first created -> highest priority.

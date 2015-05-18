@@ -111,7 +111,7 @@
           <!--/ END Widget Panel -->
           <!--/row-->
         </div>
-<%=link_to "chat", controller: 'conversations', action: 'start_conversation', :id => friend.uuid %>
+<%=link_to "chat", controller: 'conversations', action: 'start_conversation', :id => friend.uuid, method: :post %>
 
         <script type="text/javascript">
 
