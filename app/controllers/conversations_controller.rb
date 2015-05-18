@@ -14,7 +14,7 @@ class ConversationsController < ApplicationController
   	else
   		@key = current_user.email+"_@_"+@user.email
   	end 
-  		#@messages = $redis.get(@key).split(";")
+  		messages = $redis.get(@key).split(";")
   	if @messages.blank?
   		@messages = []
   	end
