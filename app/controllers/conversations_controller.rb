@@ -15,8 +15,9 @@ class ConversationsController < ApplicationController
   	else
   		@key = current_user.email+"_@_"+@user.email
   	end 
-  		@messages = $redis.get(@key).try(:split, ";") 
   		
+  		@messages = $redis.get(@key).to_s.split("#%#@#%#") 
+  
   	if @messages.blank?
   		@messages = []
   	end
@@ -31,12 +32,12 @@ def create
   redis = Redis.new
   keyis = params[:key]
   @key = params[:key]
-  newmsg = params[:message]+";"
+  newmsg = params[:message]+"#%#@#%#"
   @msg = params[:message]
   @user = current_user
   redis.append(keyis, newmsg);
 
-  @messages = $redis.get(keyis).try(:split, ";") 
+  @messages = $redis.get(keyis).to_s.split("#%#@#%#") 
 
 end
 

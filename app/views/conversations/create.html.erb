@@ -1,2 +1,5 @@
-
 <%= render partial: "users/chat" %>
+<% @msg= @messages %>
+<%= @msg.each do |message| %>
+	<%= message %>
+<% end %>

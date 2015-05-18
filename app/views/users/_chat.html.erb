@@ -6,7 +6,9 @@
 	<h1><%=@key%></h1>
 <h5 align = 'center'> </h5>
 	<div id="chatHistory" class="table-bordered chatHistory">
-
+		<% @messages.each do |message| %>
+			<p><%= message %></p>
+		<% end %>
 	</div>
 	<div id="header-content">
    	 <hr/>
@@ -25,8 +27,8 @@
 	</div>
 
 <script>
-			(function() 
-			{ 
+/*			(function() 
+			{ */
 			var publish_key = 'pub-c-39594782-c4b0-4fb3-80fe-74e262353bf6';
 			var subscribe_key = 'sub-c-7ae61028-e9dd-11e3-92e7-02ee2ddab7fe';
 			channel = "<%= @key %>";
@@ -42,8 +44,7 @@
 			pubnub.subscribe({
 				channel : channel,
 				callback : function(message) { 
-				//	alert(message);
-					$('#chatHistory')[0].innerHTML = message + '<br/>' + $('#chatHistory')[0].innerHTML; 
+					$('#chatHistory').html('<p>'+ message + '</p>' + $('#chatHistory').html()); 
 				}
 			
 			});
@@ -52,7 +53,8 @@
 		/*	pubnub.bind('click', pubnub.$('sendButton'), function(e) { */
 				
 	
-				$("#chat_form").submit(function(){
+				$("form").submit(function(){
+					alert(message);
 					pubnub.publish({
 						channel : channel, 
 						message : $('#message').val()
@@ -62,9 +64,5 @@
 				});
 				
 		/*	});*/
-		})();
+		/*})();*/
 </script>
-
-
-</body>
-</html>
