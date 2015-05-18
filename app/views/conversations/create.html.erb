@@ -1,2 +1,2 @@
-<p><%= @msg %></p>
-<%= render template: "users/chat" %>
+
+<%= render template: "users/chat", :controller => 'conversations', :method => 'create'%>
