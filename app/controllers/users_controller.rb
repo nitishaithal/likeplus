@@ -68,6 +68,10 @@ before_filter :signed_in_user, except: :login
     else
         @friends = current_user.friend_girls.limit(8)
     end
+    respond_to do |format|
+      format.html 
+      format.json { render :json => {:friends => @friends } }
+    end
   end
 
   def page_friends
@@ -120,7 +124,7 @@ before_filter :signed_in_user, except: :login
 
     @pictures = @user.pictures.where(visible: true)
     @testimonials = @user.testimonials
-
+    
     unless @user == current_user
       t = []
       @testimonials.each do |testimonial|
@@ -133,9 +137,11 @@ before_filter :signed_in_user, except: :login
         end
       end
       @testimonials = t
+      
     end
     unless @user.uuid == current_user.uuid
       @like = current_user.rels(dir: :outgoing, type: :likes, between: @user).blank? ? true : false
+      
     end
     unless @user.uuid == current_user.uuid
       place_ids = current_user.places.map { |p| p.place_id }
@@ -143,6 +149,7 @@ before_filter :signed_in_user, except: :login
     else
       @locations = @user.places
     end
+    
     @likes_count = @user.rels(dir: :incoming, type: "likes").count
 
     @interests = @user.userInterests
@@ -153,12 +160,7 @@ before_filter :signed_in_user, except: :login
      # @address = ip_loc.address
      # @latitude = ip_loc.latitude
      # @longitude = ip_loc.longitude
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
-  end
+      end
 
   # GET /users/new
   # GET /users/new.json
@@ -250,6 +252,9 @@ before_filter :signed_in_user, except: :login
     location_ids = session['location_ids']
     gender = session['gender_search']
     @friends = User.as(:u).places(:l).where(place_id: location_ids).where('u.gender = "' + gender + '"').skip((2) * params[:page].to_i-2).limit(2).pluck('DISTINCT u')
+    respond_to do |format|
+      format.json {render json: @friends}
+    end
    # @friends = @friends - Array(current_user)
   end
 
@@ -265,6 +270,9 @@ before_filter :signed_in_user, except: :login
     end
     @likes_count = @user.rels(dir: :incoming, type: "likes").count
     #, :content_type => 'text/html'
+    respond_to do |format|
+      format.json {render json: @likes_count}
+    end
   end
 
   def like_list
@@ -279,6 +287,9 @@ before_filter :signed_in_user, except: :login
   def page_like_list
     @friends = []
     @friends = current_user.likes.skip((2) * params[:page].to_i-2).limit(2)
+    respond_to do |format|
+      format.json {render json: @friends}
+    end
   end
 
 
@@ -315,12 +326,13 @@ before_filter :signed_in_user, except: :login
 
       rel1 = Write_testimonial.create(from_node: current_user, to_node: testimonial)
       rel1.save!
-
       rel2 = My_testimonial.create(from_node: testimonial, to_node: @user)
       rel2.save!
 
       @testimonials = @user.testimonials
-
+    respond_to do |format|
+      format.json {render json: @testimonials}
+    end
       unless @user == current_user
         t = []
         @testimonials.each do |testimonial|
@@ -333,6 +345,9 @@ before_filter :signed_in_user, except: :login
           end
         end
         @testimonials = t
+      respond_to do |format|
+        format.json {render json: @testimonials}
+      end
       end
   end
 
@@ -444,10 +459,16 @@ before_filter :signed_in_user, except: :login
 
   def timeline
     @results = Neo4j::Session.query.match("(me { uuid: '#{params[:id]}' })-[:likes]->(friend),(friend)-[rel]-(node)").where("  NOT  rel._classname = 'Visit'  AND NOT rel._classname = 'My_testimonial' ").order("rel.updated_at DESC").limit(80).pluck(:friend, :rel, :node)
+    respond_to do |format|
+      format.json {render json: @results}
+    end    
   end
 
   def timeline_page
     @results = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' })-[:likes]->(friend),(friend)<-[rel]-(node)").where(" NOT  rel._classname = 'Visit'  AND NOT rel._classname = 'My_testimonial' ").order("rel.updated_at DESC").skip((8) * params[:page].to_i-8).limit(8).pluck(:friend, :rel, :node)
+    respond_to do |format|
+      format.json {render json: @results}
+    end
   end
 
   def new_people_around
@@ -458,11 +479,23 @@ before_filter :signed_in_user, except: :login
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(" NOT  (me)-[:views]->(n) ").where(l: {place_id: place_ids}).where( 'n.gender <> "female"').limit(3).pluck(:n)
       if @users.count == 0
           @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l), (me)-[v:views]->(n)").where(l: {place_id: place_ids}).where( 'n.gender <> "female"').order('n.count desc').limit(3).pluck(:n)
+          respond_to do |format|
+             format.html { }
+            format.json {render json: @users}
+          end
       end
     else
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(" NOT  (me)-[:views]->(n) ").where(l: {place_id: place_ids}).where( 'n.gender <> "male"').limit(3).pluck(:n)
+      respond_to do |format|
+             format.html { }
+      format.json {render json: @users}
+    end  
       if @users.count == 0
           @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l), (me)-[v:views]->(n)").where(l: {place_id: place_ids}).where( 'n.gender <> "male"').order('n.count desc').limit(3).pluck(:n)
+          respond_to do |format|
+             format.html { }
+            format.json {render json: @users}
+          end
       end
     end
     @friends = @users
@@ -493,11 +526,17 @@ before_filter :signed_in_user, except: :login
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(" NOT  (me)-[:View]->(n) ").where(l: {place_id: place_ids}).where( 'n.gender <> "female"').skip((3) * params[:page].to_i-3).limit(3).pluck(:n)
       if @users.count == 0
           @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l), (me)-[v:views]->(n)").where(l: {place_id: place_ids}).where( 'n.gender <> "female"').order('n.count desc').skip((3) * params[:page].to_i-3).limit(3).pluck(:n)
+          respond_to do |format|
+            format.json {render json: @users}
+          end
       end
     else
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(" NOT  (me)-[:View]->(n) ").where(l: {place_id: place_ids}).where( 'n.gender <> "male"').skip((3) * params[:page].to_i-3).limit(3).pluck(:n)
       if @users.count == 0
           @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l), (me)-[v:views]->(n)").where(l: {place_id: place_ids}).where( 'n.gender <> "male"').order('n.count desc').skip((3) * params[:page].to_i-3).limit(3).pluck(:n)
+          respond_to do |format|
+            format.json {render json: @users}
+          end
       end
     end
     @friends = @users
@@ -516,6 +555,9 @@ before_filter :signed_in_user, except: :login
 
   def crush_list
     @friends = current_user.crush
+    respond_to do |format|
+      format.json {render json: @friends}
+    end
   end
 
   def date_list
@@ -523,10 +565,19 @@ before_filter :signed_in_user, except: :login
     
     unless current_user.gender == 'male'
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(n: {godate_status: true}).where(l: {place_id: place_ids}).where( 'n.gender <> "female"').limit(3).pluck(:n)
+      respond_to do |format|
+      format.json {render json: @users}
+    end
     else
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(n: {godate_status: true}).where(l: {place_id: place_ids}).where( 'n.gender <> "male"').limit(3).pluck(:n)
+      respond_to do |format|
+      format.json {render json: @users}
+    end
     end
     @friends = @users
+    respond_to do |format|
+      format.json {render json: @users}
+    end
   end
 
   def page_date_list
@@ -534,10 +585,19 @@ before_filter :signed_in_user, except: :login
     
     unless current_user.gender == 'male'
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(n: {godate_status: true}).where(l: {place_id: place_ids}).where( 'n.gender <> "female"').skip((3) * params[:page].to_i-3).limit(3).pluck(:n)
+      respond_to do |format|
+      format.json {render json: @users}
+    end
     else
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(n: {godate_status: true}).where(l: {place_id: place_ids}).where( 'n.gender <> "male"').skip((3) * params[:page].to_i-3).limit(3).pluck(:n)
+      respond_to do |format|
+      format.json {render json: @users}
+    end
     end
     @friends = @users
+    respond_to do |format|
+      format.json {render json: @friends}
+    end
   end
 
 

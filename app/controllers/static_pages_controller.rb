@@ -15,6 +15,11 @@ class StaticPagesController < ApplicationController
       #@badges = Neo4j::Session.query.match("(me { uuid: '#{@user.uuid}' })-[:getBadges]->(myBadge)").where("myBadge.status = true").pluck('DISTINCT myBadge.badgeType, count(myBadge.badgeType)')
       @badges = Neo4j::Session.query.match("(me { uuid: '#{@user.uuid}' })-[:getBadges]->(myBadge)").pluck('DISTINCT myBadge.badgeType, count(myBadge.badgeType)')
       @locations = @user.places
+      respond_to do |format|
+      format.html
+      format.json {render :json => {:pictures => @pictures, :testimonials => @testimonials, :latitude => @latitude,
+        :longitude => @longitude, :interests => @interests, :interests_count => @interests_count, :badges => @badges, :locations => @locations}}
+    end
   	end
   end
 
