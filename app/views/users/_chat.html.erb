@@ -44,7 +44,7 @@
 			pubnub.subscribe({
 				channel : channel,
 				callback : function(message) { 
-					$('#chatHistory').html('<p>'+ message + '</p>' + $('#chatHistory').html()); 
+				$('#chatHistory')[0].innerHTML = message + '<br/>' + $('#chatHistory')[0].innerHTML; 
 				}
 			
 			});
