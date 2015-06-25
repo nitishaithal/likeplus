@@ -71,6 +71,7 @@ resources :conversations do
     end 
   end
 
+resources :chat
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

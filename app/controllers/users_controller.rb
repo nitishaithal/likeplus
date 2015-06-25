@@ -480,17 +480,20 @@ before_filter :signed_in_user, except: :login
       if @users.count == 0
           @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l), (me)-[v:views]->(n)").where(l: {place_id: place_ids}).where( 'n.gender <> "female"').order('n.count desc').limit(3).pluck(:n)
           respond_to do |format|
+             format.html { }
             format.json {render json: @users}
           end
       end
     else
       @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l)").where(" NOT  (me)-[:views]->(n) ").where(l: {place_id: place_ids}).where( 'n.gender <> "male"').limit(3).pluck(:n)
       respond_to do |format|
+             format.html { }
       format.json {render json: @users}
     end  
       if @users.count == 0
           @users = Neo4j::Session.query.match("(me { uuid: '#{current_user.uuid}' }), (n:User), (n)-[:places]->(l), (me)-[v:views]->(n)").where(l: {place_id: place_ids}).where( 'n.gender <> "male"').order('n.count desc').limit(3).pluck(:n)
           respond_to do |format|
+             format.html { }
             format.json {render json: @users}
           end
       end
