@@ -2,6 +2,8 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  get 'activites/index'
+
   get "static_pages/home"
   get "static_pages/help"
 

@@ -51,7 +51,7 @@ gem 'koala'
 #gem 'faker', '1.0.1'
 gem 'jquery-turbolinks'
 #gem 'purecss'
-
+gem 'public_activity'
 gem 'puma'
 gem 'magnific-popup-rails', github: 'itsNikolay/magnific-popup-rails'
 

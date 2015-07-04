@@ -1,6 +1,5 @@
 class MyBadge
   include Neo4j::ActiveNode
-
   property :badgeType, :type => String, :index => :exact
   property :status, :type => Boolean, :index => :exact, default: false
   property :comment, :type => String

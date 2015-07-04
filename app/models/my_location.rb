@@ -1,6 +1,6 @@
 class MyLocation 
   include Neo4j::ActiveNode
-
+   
   	property :place_type, :type => String
 	  property :details, :type => String
   	property :current_place, :type => Boolean
