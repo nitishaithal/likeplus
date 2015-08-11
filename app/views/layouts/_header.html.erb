@@ -1,4 +1,4 @@
-              <!-- START Template Header -->
+          <!-- START Template Header -->
 <header id="header" class="navbar navbar-fixed-top">
             <!-- START navbar header -->
             <div class="navbar-header">
@@ -141,7 +141,7 @@
                         <!--/ Dropdown menu -->
                     </li>
                     <!--/ Message dropdown -->
- <!-- Notification dropdown -->
+<!-- Notification dropdown -->
                     <li class="dropdown custom" id="header-dd-notification">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
                             <span class="meta">
@@ -172,60 +172,22 @@
                         <div class="dropdown-menu" role="menu">
                             <div class="dropdown-header">
                                 <span class="title">Notification <span class="count"></span></span>
-                                <span class="option text-right"><a href="javascript:void(0);">Clear all</a></span>
+                               
                             </div>
                             <div class="dropdown-body slimscroll">
                                 
                                 <!-- Message list -->
                                 <div class="media-list">
-                                    <a href="javascript:void(0);" class="media read border-dotted">
-                                        <span class="media-body">
-                                             <span class="avatar"><img src="http://res.cloudinary.com/rashi/image/upload/c_fill,g_faces,h_30,w_30/ujryzdwkw9pzhudbuai1" class="img-circle" alt=""></span>
-                                        </span>
-                                    </a>
-
-                                    <a href="javascript:void(0);" class="media read border-dotted">
-                                        <span class="media-object pull-left">
-                                            <i class="ico-call-incoming"></i>
-                                        </span>
-                                        <span class="media-body">
-                                            <span class="media-text">Aliquip ex ea commodo consequat.</span>
-                                            <!-- meta icon -->
-                                            <span class="media-meta pull-right">1w</span>
-                                            <!--/ meta icon -->
-                                        </span>
-                                    </a>
-
-                                    <a href="javascript:void(0);" class="media read border-dotted">
-                                        <span class="media-object pull-left">
-                                            <i class="ico-alarm2"></i>
-                                        </span>
-                                        <span class="media-body">
-                                            <span class="media-text">Excepteur sint <span class="text-primary semibold">occaecat</span> cupidatat non.</span>
-                                            <!-- meta icon -->
-                                            <span class="media-meta pull-right">12w</span>
-                                            <!--/ meta icon -->
-                                        </span>
-                                    </a>
-
-                                    <a href="javascript:void(0);" class="media read border-dotted">
-                                        <span class="media-object pull-left">
-                                            <i class="ico-checkmark3 bgcolor-success"></i>
-                                        </span>
-                                        <span class="media-body">
-                                            <span class="media-text">Lorem ipsum dolor sit amet, <span class="text-primary semibold">consectetur</span> adipisicing elit.</span>
-                                            <!-- meta icon -->
-                                            <span class="media-meta pull-right">14w</span>
-                                            <!--/ meta icon -->
-                                        </span>
-                                    </a>
+                                     <%= render partial: "users/testimonials", :locals => {:user => @user} %> <h4>Testimonial about you</h4>
                                 </div>
+                                <p class="nm dis-none-imp"><a href="javascript:void(0);" class="semibold">View all</a></p>
                                 <!--/ Message list -->
                             </div>
                         </div>
                         <!--/ Dropdown menu -->
                     </li>
                     <!--/ Notification dropdown -->
+
 
 
 

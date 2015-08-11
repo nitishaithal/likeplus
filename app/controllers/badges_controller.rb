@@ -1,5 +1,5 @@
 class BadgesController < ApplicationController
-
+  include ActionController::Live
 def create
   badgeType = params[:my_badge][:badgeType]
      @user = User.find(params[:user_id])
@@ -69,6 +69,22 @@ def badge_list
   @badges = @user.getBadges.where(badgeType: params[:type])
   render :layout => false
 end
+
+  def index
+    #text/event-stream content type
+    response.headers['Content-Type'] = 'text/event-stream'
+    sse = Reloader::SSE.new(response.stream)
+    begin
+      loop do
+        sse.write({ :time => Time.now})
+        sleep 1
+      end
+    rescue IOError
+      ensure
+        sse.close
+      end
+    end
+  end
 
 private
 

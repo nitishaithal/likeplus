@@ -556,6 +556,7 @@ before_filter :signed_in_user, except: :login
   def crush_list
     @friends = current_user.crush
     respond_to do |format|
+      format.html
       format.json {render json: @friends}
     end
   end

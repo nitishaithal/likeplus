@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     end
     collection do
       get :badge_list, controller: 'badges'
+      get 'badge' => 'badges#index'
     end
   end
 
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
       get :friends, :page_friends, :autocomplete_location_address, :page_search_criteria, :like_list, :page_like_list, :new_people_around, :page_new_people_around,:crush_list, :date_list, :page_date_list
     end
     member do
-      patch :add_location, :badges, :add_testimonial, :add_picture, :map_delete
+      patch :add_location, :badges, :add_testimonial, :add_notifications, :add_picture, :map_delete
       get :search_criteria, :likes, :pics_edit, :set_default_pic, :set_visible_pic, :likes_testimonial, :delete_testimonial, :timeline, :crush, :set_godate, :godate
       post :update_status, :update_about_me
     end

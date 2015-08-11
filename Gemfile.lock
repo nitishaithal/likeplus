@@ -251,6 +251,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
+    rb-fsevent (0.9.4)
     rdoc (4.1.2)
       json (~> 1.4)
     redis (3.1.0)
@@ -354,6 +355,7 @@ DEPENDENCIES
   rails-timeago
   rails4-autocomplete
   rails_12factor
+  rb-fsevent
   redis (= 3.1.0)
   sass-rails (~> 4.0.3)
   sdoc

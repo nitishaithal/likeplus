@@ -111,5 +111,6 @@ group :development do
 
 
   gem 'foreman'
+  gem 'rb-fsevent'
  # gem 'rspec-rails' 
 end
